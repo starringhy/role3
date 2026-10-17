@@ -1,7 +1,7 @@
 /**
  * ==========================================================================
  * 우리 반 1인 1역할 배정 시스템 - script.js (Apple Pink Edition)
- * 방어적 프로그래밍 적용: [object Object], null, undefined 완전 방지
+ * 방어적 프로그래밍 완벽 적용: [object Object], null, undefined 절대 방지
  * ==========================================================================
  */
 
@@ -27,7 +27,7 @@ const DEFAULT_ROLES = [
   { id: 12, name: "소식·전달 도우미", icon: "💌", desc: "선생님의 주요 공지사항과 교무실 전달 업무를 지원합니다." }
 ];
 
-// 2. 상태 저장 객체
+// 2. 전역 상태 객체
 const state = {
   className: "3학년 2반",
   termName: "2026학년도 1학기",
@@ -37,7 +37,55 @@ const state = {
   gasUrl: ""
 };
 
-// 3. Apple 햅틱 사운드 합성 (Web Audio API)
+// 3. 강력한 안전 문자열 정제 함수 ([object Object], null, undefined 완벽 차단)
+function extractCleanString(val, fallback = "") {
+  if (val === null || val === undefined) return fallback;
+
+  // 객체가 전달되었을 경우 내부 필드 안전 탐색
+  if (typeof val === "object") {
+    const candidate = val.name || val.studentName || val.student || val.text || val.value || val.title || "";
+    return extractCleanString(candidate, fallback);
+  }
+
+  let str = String(val).trim();
+
+  // 자바스크립트 기본 객체 직렬화 오류 방지
+  if (
+    str === "[object Object]" ||
+    str === "null" ||
+    str === "undefined" ||
+    str === "NaN" ||
+    str.startsWith("[object")
+  ) {
+    return fallback;
+  }
+
+  return str;
+}
+
+// 학생 이름 전용 정제 (앞자리 번호 '1. ', '01. ' 등 자동 제거)
+function extractCleanStudentName(val) {
+  let name = extractCleanString(val, "");
+  if (!name) return "";
+
+  // "1. 김민준", "01. 김민준", "1) 김민준", "1 김민준" 형태의 번호 제거
+  name = name.replace(/^[\d]{1,2}[\s.\-)]+\s*/, "").trim();
+
+  return name;
+}
+
+function escapeHtml(str) {
+  const clean = extractCleanString(str, "");
+  if (!clean) return "";
+  return clean
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+// 4. Web Audio API 맑은 챠임 & 햅틱 사운드
 function playAppleSound(type = 'click') {
   try {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -109,59 +157,34 @@ function playAppleSound(type = 'click') {
   }
 }
 
-// 4. 안전한 문자열 변환 및 XSS 방지 유틸
-function sanitizeString(val, fallback = "") {
-  if (val === null || val === undefined) return fallback;
-  if (typeof val === "object") {
-    // 혹시 객체가 들어온 경우
-    return val.name || val.studentName || val.student || fallback;
-  }
-  const str = String(val).trim();
-  if (str === "[object Object]" || str === "null" || str === "undefined") {
-    return fallback;
-  }
-  return str;
-}
-
-function escapeHtml(str) {
-  const clean = sanitizeString(str);
-  if (!clean) return "";
-  return clean
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-// 5. 로컬스토리지 저장 및 불러오기 (철저한 데이터 검증)
-const STORAGE_KEY = 'class_role_system_apple_pink_v4';
+// 5. 로컬스토리지 저장 및 불러오기 (데이터 오염 완전 복구)
+const STORAGE_KEY = 'class_role_system_apple_pink_v5';
 
 function saveToStorage() {
   try {
     const dataToSave = {
-      className: sanitizeString(state.className, "3학년 2반"),
-      termName: sanitizeString(state.termName, "2026학년도 1학기"),
-      students: state.students.map(s => sanitizeString(s)).filter(Boolean),
-      roles: state.roles.map(r => ({
-        id: Number(r.id) || 1,
-        name: sanitizeString(r.name, "역할"),
-        icon: sanitizeString(r.icon, "⭐"),
-        desc: sanitizeString(r.desc || r.duty, "")
+      className: extractCleanString(state.className, "3학년 2반"),
+      termName: extractCleanString(state.termName, "2026학년도 1학기"),
+      students: state.students.map(s => extractCleanStudentName(s)).filter(Boolean),
+      roles: state.roles.map((r, idx) => ({
+        id: Number(r.id) || idx + 1,
+        name: extractCleanString(r.name, `역할 ${idx + 1}`),
+        icon: extractCleanString(r.icon, "⭐"),
+        desc: extractCleanString(r.desc, "")
       })),
-      assignments: state.assignments.map(a => ({
-        number: Number(a.number) || 1,
-        studentName: sanitizeString(a.studentName || a.student, ""),
-        roleId: Number(a.roleId || a.role?.id) || 1,
-        roleName: sanitizeString(a.roleName || a.role?.name, ""),
+      assignments: state.assignments.map((a, idx) => ({
+        number: Number(a.number) || idx + 1,
+        studentName: extractCleanStudentName(a.studentName),
+        roleId: Number(a.roleId || a.role?.id) || idx + 1,
+        roleName: extractCleanString(a.roleName || a.role?.name, ""),
         role: a.role ? {
-          id: Number(a.role.id) || 1,
-          name: sanitizeString(a.role.name, "역할"),
-          icon: sanitizeString(a.role.icon, "⭐"),
-          desc: sanitizeString(a.role.desc || a.role.duty, "")
+          id: Number(a.role.id) || idx + 1,
+          name: extractCleanString(a.role.name, "역할"),
+          icon: extractCleanString(a.role.icon, "⭐"),
+          desc: extractCleanString(a.role.desc, "")
         } : null
       })),
-      gasUrl: sanitizeString(state.gasUrl, "")
+      gasUrl: extractCleanString(state.gasUrl, "")
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
   } catch (e) {
@@ -171,70 +194,65 @@ function saveToStorage() {
 
 function loadFromStorage() {
   try {
-    // 현재 키 또는 이전 키에서 복원 시도
-    let raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      raw = localStorage.getItem('class_role_system_apple_pink_v3');
-    }
-
+    const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
       state.students = [...DEFAULT_STUDENTS];
       state.roles = JSON.parse(JSON.stringify(DEFAULT_ROLES));
+      state.assignments = [];
       return;
     }
 
     const parsed = JSON.parse(raw);
-    state.className = sanitizeString(parsed.className, "3학년 2반");
-    state.termName = sanitizeString(parsed.termName, "2026학년도 1학기");
-    state.gasUrl = sanitizeString(parsed.gasUrl, "");
+    state.className = extractCleanString(parsed.className, "3학년 2반");
+    state.termName = extractCleanString(parsed.termName, "2026학년도 1학기");
+    state.gasUrl = extractCleanString(parsed.gasUrl, "");
 
-    // 학생 명단 정제 ([object Object] 완전 필터링)
+    // 1) 학생 명단 정제 및 오염 데이터 방어
     if (Array.isArray(parsed.students) && parsed.students.length > 0) {
       const cleanStudents = parsed.students
-        .map(s => sanitizeString(s))
-        .filter(s => s.length > 0 && s !== "[object Object]");
+        .map(s => extractCleanStudentName(s))
+        .filter(s => s.length > 0);
+
       state.students = cleanStudents.length > 0 ? cleanStudents : [...DEFAULT_STUDENTS];
     } else {
       state.students = [...DEFAULT_STUDENTS];
     }
 
-    // 역할 목록 정제
+    // 2) 역할 목록 정제
     if (Array.isArray(parsed.roles) && parsed.roles.length > 0) {
       const cleanRoles = parsed.roles.map((r, idx) => {
         if (!r || typeof r !== "object") {
-          return { id: idx + 1, name: sanitizeString(r, `역할 ${idx + 1}`), icon: "⭐", desc: "" };
+          return { id: idx + 1, name: extractCleanString(r, `역할 ${idx + 1}`), icon: "⭐", desc: "" };
         }
-        const name = sanitizeString(r.name || r.roleName, `역할 ${idx + 1}`);
-        const icon = sanitizeString(r.icon, "⭐");
-        const desc = sanitizeString(r.desc || r.duty, "");
         return {
           id: Number(r.id) || idx + 1,
-          name: name,
-          icon: icon,
-          desc: desc
+          name: extractCleanString(r.name, `역할 ${idx + 1}`),
+          icon: extractCleanString(r.icon, "⭐"),
+          desc: extractCleanString(r.desc, "")
         };
-      }).filter(r => r.name !== "[object Object]");
+      }).filter(r => r.name.length > 0);
+
       state.roles = cleanRoles.length > 0 ? cleanRoles : JSON.parse(JSON.stringify(DEFAULT_ROLES));
     } else {
       state.roles = JSON.parse(JSON.stringify(DEFAULT_ROLES));
     }
 
-    // 배정 내역 정제
+    // 3) 배정 내역 정제
     if (Array.isArray(parsed.assignments)) {
       state.assignments = parsed.assignments.map((a, idx) => {
-        const studentName = sanitizeString(a.studentName || a.student, "");
-        const roleId = Number(a.roleId || a.role?.id) || idx + 1;
-        const roleName = sanitizeString(a.roleName || a.role?.name, "");
+        const student = extractCleanStudentName(a.studentName);
+        const rId = Number(a.roleId || a.role?.id) || idx + 1;
+        const rName = extractCleanString(a.roleName || a.role?.name, "");
         return {
           number: Number(a.number) || idx + 1,
-          studentName: studentName === "[object Object]" ? "" : studentName,
-          roleId: roleId,
-          roleName: roleName,
+          studentName: student,
+          roleId: rId,
+          roleName: rName,
           role: a.role ? {
-            id: Number(a.role.id) || roleId,
-            name: sanitizeString(a.role.name, roleName),
-            icon: sanitizeString(a.role.icon, "⭐"),
-            desc: sanitizeString(a.role.desc || a.role.duty, "")
+            id: Number(a.role.id) || rId,
+            name: extractCleanString(a.role.name, rName),
+            icon: extractCleanString(a.role.icon, "⭐"),
+            desc: extractCleanString(a.role.desc, "")
           } : null
         };
       });
@@ -242,7 +260,7 @@ function loadFromStorage() {
       state.assignments = [];
     }
   } catch (e) {
-    console.warn("Storage load error, falling back to defaults", e);
+    console.warn("Storage load exception, resetting to defaults", e);
     state.students = [...DEFAULT_STUDENTS];
     state.roles = JSON.parse(JSON.stringify(DEFAULT_ROLES));
     state.assignments = [];
@@ -260,18 +278,18 @@ function renderCards() {
     if (!role) return;
     const card = document.createElement("article");
     card.className = "role-card";
-    card.dataset.roleId = role.id;
+    card.dataset.roleId = String(role.id);
 
-    // 배정된 학생 안전하게 찾기
+    // 해당 역할에 배정된 학생 안전하게 검색
     const assignedItem = state.assignments.find(item => {
       if (!item) return false;
-      if (item.roleId && item.roleId === role.id) return true;
+      if (Number(item.roleId) === Number(role.id)) return true;
       if (item.role && Number(item.role.id) === Number(role.id)) return true;
       if (item.roleName && item.roleName === role.name) return true;
       return false;
     });
 
-    const studentName = assignedItem ? sanitizeString(assignedItem.studentName || assignedItem.student) : "";
+    const studentName = assignedItem ? extractCleanStudentName(assignedItem.studentName) : "";
 
     card.innerHTML = `
       <div class="card-header-bar">
@@ -281,7 +299,7 @@ function renderCards() {
       <div class="card-body-content">
         <h3 class="card-role-name">${escapeHtml(role.name)}</h3>
         <p class="card-role-desc">${escapeHtml(role.desc || '')}</p>
-        <div class="card-assigned-block" onclick="openRoleChangeModal(${role.id})" title="클릭하여 학생 변경">
+        <div class="card-assigned-block" onclick="openRoleChangeModal(${role.id})" title="클릭하여 담당 학생 변경">
           <span class="assigned-label">담당 학생</span>
           <span class="assigned-name ${studentName ? '' : 'empty'}" id="slot-name-${role.id}">
             ${studentName ? escapeHtml(studentName) : '배정 대기 중'}
@@ -302,7 +320,7 @@ function renderCards() {
   updatePrintHeader();
 }
 
-// 7. 스펙 통계 및 인쇄 헤더 업데이트
+// 7. 스펙 메트릭스 및 인쇄 헤더 업데이트
 function updateSpecs() {
   const totalStudentsEl = document.getElementById("statTotalStudents");
   if (totalStudentsEl) totalStudentsEl.textContent = state.students.length;
@@ -310,7 +328,7 @@ function updateSpecs() {
   const totalRolesEl = document.getElementById("statTotalRoles");
   if (totalRolesEl) totalRolesEl.textContent = state.roles.length;
 
-  const assignedCount = state.assignments.filter(a => a && sanitizeString(a.studentName || a.student)).length;
+  const assignedCount = state.assignments.filter(a => a && extractCleanStudentName(a.studentName)).length;
   const statAssignedEl = document.getElementById("statAssignedCount");
   if (statAssignedEl) {
     statAssignedEl.textContent = `${assignedCount} / ${state.roles.length}`;
@@ -333,18 +351,18 @@ function updatePrintHeader() {
   if (pDate) pDate.textContent = `배정 일자: ${state.termName}`;
 }
 
-// 8. 역할 배정하기 및 3-2-1 카운트다운
+// 8. [🎲 역할 배정하기] 3, 2, 1 카운트다운 & 슬롯 롤링 애니메이션
 let isProcessingRoll = false;
 
 function handleAssignWithCountdown() {
   if (isProcessingRoll) return;
 
   if (state.students.length === 0) {
-    showToast("⚠️ 등록된 학생이 없습니다. 명단을 먼저 등록해 주세요.");
+    showToast("⚠️ 등록된 학생이 없습니다. 상단 [명단 및 역할 관리]에서 등록해 주세요.");
     return;
   }
   if (state.roles.length === 0) {
-    showToast("⚠️ 등록된 역할이 없습니다. 역할을 먼저 등록해 주세요.");
+    showToast("⚠️ 등록된 역할이 없습니다. 상단 [명단 및 역할 관리]에서 등록해 주세요.");
     return;
   }
 
@@ -355,14 +373,14 @@ function handleAssignWithCountdown() {
     btn.innerHTML = `<span class="btn-symbol">⏳</span><span>배정 진행 중...</span>`;
   }
 
-  // Fisher-Yates 무작위 셔플 준비
+  // Fisher-Yates 완전 무작위 셔플
   const shuffledStudents = [...state.students];
   for (let i = shuffledStudents.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffledStudents[i], shuffledStudents[j]] = [shuffledStudents[j], shuffledStudents[i]];
   }
 
-  // 3, 2, 1 카운트다운 시작
+  // 3, 2, 1 카운트다운 실행
   runCountdown(() => {
     startSlotMachineRoll(shuffledStudents);
   });
@@ -384,7 +402,7 @@ function runCountdown(callback) {
     { count: "3", cheer: "두근두근! 자리에 바르게 앉아요 ✨" },
     { count: "2", cheer: "이번 학기 나의 소중한 역할은? 🎲" },
     { count: "1", cheer: "숨을 죽이고 카드를 주목하세요 🌟" },
-    { count: "짠! 🎉", cheer: "Class Roles 배정 결과를 공개합니다! 🎈" }
+    { count: "짠! 🎉", cheer: "우리 반 1인 1역할 결과를 공개합니다! 🎈" }
   ];
 
   let step = 0;
@@ -395,7 +413,7 @@ function runCountdown(callback) {
     if (cheerEl) cheerEl.textContent = current.cheer;
 
     numberEl.classList.remove("pop");
-    void numberEl.offsetWidth;
+    void numberEl.offsetWidth; // DOM 리플로우 유도하여 애니메이션 재트리거
     numberEl.classList.add("pop");
 
     if (step === 3) {
@@ -429,8 +447,8 @@ function startSlotMachineRoll(shuffledStudents) {
     state.roles.forEach(role => {
       const slot = document.getElementById(`slot-name-${role.id}`);
       if (slot) {
-        const randName = state.students[Math.floor(Math.random() * state.students.length)];
-        slot.textContent = sanitizeString(randName);
+        const randStudent = state.students[Math.floor(Math.random() * state.students.length)];
+        slot.textContent = extractCleanStudentName(randStudent);
       }
     });
 
@@ -444,7 +462,7 @@ function startSlotMachineRoll(shuffledStudents) {
 function finishAssignment(shuffledStudents) {
   const newAssignments = [];
   state.roles.forEach((role, idx) => {
-    const student = sanitizeString(shuffledStudents[idx], "");
+    const student = extractCleanStudentName(shuffledStudents[idx] || "");
     newAssignments.push({
       number: idx + 1,
       studentName: student,
@@ -465,11 +483,12 @@ function finishAssignment(shuffledStudents) {
   const cards = document.querySelectorAll(".role-card");
   cards.forEach(card => card.classList.remove("rolling"));
 
+  // 화면 카드 슬롯 업데이트
   state.roles.forEach(role => {
     const slot = document.getElementById(`slot-name-${role.id}`);
-    const assigned = state.assignments.find(a => a.roleId === role.id);
+    const assigned = state.assignments.find(a => Number(a.roleId) === Number(role.id));
     if (slot) {
-      const name = assigned ? sanitizeString(assigned.studentName) : "";
+      const name = assigned ? extractCleanStudentName(assigned.studentName) : "";
       slot.className = `assigned-name ${name ? '' : 'empty'}`;
       slot.textContent = name ? name : '배정 대기 중';
     }
@@ -487,7 +506,7 @@ function finishAssignment(shuffledStudents) {
   showToast("🎉 1인 1역할 배정이 완료되었습니다!");
 }
 
-// 9. 모달 제어 & 세그먼트 탭 전환
+// 9. 모달 관리 & 세그먼트 탭 전환
 function openModal(id) {
   const modal = document.getElementById(id);
   if (!modal) return;
@@ -498,6 +517,8 @@ function openModal(id) {
     const gasInput = document.getElementById("gasUrlInput");
     if (gasInput) gasInput.value = state.gasUrl || "";
   } else if (id === "manageModal") {
+    // 명단 및 역할 관리 모달 열릴 때 항상 1번째 탭으로 초기화 및 데이터 채우기
+    resetManageTabs();
     populateManageModal();
   }
 }
@@ -506,6 +527,18 @@ function closeModal(id) {
   const modal = document.getElementById(id);
   if (modal) modal.classList.remove("active");
   playAppleSound('click');
+}
+
+function resetManageTabs() {
+  const tabStudents = document.getElementById("tabBtnStudents");
+  const tabRoles = document.getElementById("tabBtnRoles");
+  const paneStudents = document.getElementById("tabManageStudents");
+  const paneRoles = document.getElementById("tabManageRoles");
+
+  if (tabStudents) tabStudents.classList.add("active");
+  if (tabRoles) tabRoles.classList.remove("active");
+  if (paneStudents) paneStudents.style.display = "block";
+  if (paneRoles) paneRoles.style.display = "none";
 }
 
 function initSegmentedTabs() {
@@ -519,7 +552,7 @@ function initSegmentedTabs() {
         tabContainer.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
 
-        if (modalBody) {
+        if (modalBody && targetId) {
           modalBody.querySelectorAll(".tab-pane").forEach(pane => {
             pane.style.display = pane.id === targetId ? "block" : "none";
           });
@@ -529,14 +562,56 @@ function initSegmentedTabs() {
   });
 }
 
-// 10. 학생 명단 및 역할 관리 모달 채우기 & 저장 ([object Object] 완전 방지)
+// 10. 학생 명단 및 역할 관리 모달 데이터 바인딩 & 실시간 카운터
+function updateManageCounters() {
+  const studentArea = document.getElementById("manageStudentsText");
+  const roleArea = document.getElementById("manageRolesText");
+
+  let studentCount = 0;
+  if (studentArea) {
+    const lines = studentArea.value
+      .split(/[\n,]/)
+      .map(s => extractCleanStudentName(s))
+      .filter(Boolean);
+    studentCount = lines.length;
+  }
+
+  let roleCount = 0;
+  if (roleArea) {
+    const lines = roleArea.value
+      .split("\n")
+      .map(s => extractCleanString(s))
+      .filter(Boolean);
+    roleCount = lines.length;
+  }
+
+  const badgeS = document.getElementById("badgeStudentCount");
+  if (badgeS) badgeS.textContent = `${studentCount}명`;
+
+  const badgeR = document.getElementById("badgeRoleCount");
+  if (badgeR) badgeR.textContent = `${roleCount}개`;
+
+  const hintS = document.getElementById("studentCountHint");
+  if (hintS) hintS.textContent = `현재 ${studentCount}명 등록됨`;
+
+  const hintR = document.getElementById("roleCountHint");
+  if (hintR) {
+    if (studentCount > 0 && roleCount !== studentCount) {
+      hintR.textContent = `현재 ${roleCount}개 (학생 ${studentCount}명과 맞춤 권장)`;
+      hintR.style.color = "#FF2D55";
+    } else {
+      hintR.textContent = `현재 ${roleCount}개 등록됨`;
+      hintR.style.color = "#86868B";
+    }
+  }
+}
+
 function populateManageModal() {
   const studentArea = document.getElementById("manageStudentsText");
   if (studentArea) {
-    // 순수 문자열 배열로만 안전하게 변환
     studentArea.value = state.students
-      .map(s => sanitizeString(s))
-      .filter(s => s && s !== "[object Object]")
+      .map(s => extractCleanStudentName(s))
+      .filter(Boolean)
       .join("\n");
   }
 
@@ -545,53 +620,63 @@ function populateManageModal() {
     roleArea.value = state.roles
       .map(r => {
         if (!r) return "";
-        const icon = sanitizeString(r.icon, "⭐");
-        const name = sanitizeString(r.name, "역할");
-        const desc = sanitizeString(r.desc || r.duty, "");
-        if (name === "[object Object]") return "";
-        return `${icon} ${name} | ${desc}`.trim();
+        const icon = extractCleanString(r.icon, "⭐");
+        const name = extractCleanString(r.name, "역할");
+        const desc = extractCleanString(r.desc, "");
+        if (desc) {
+          return `${icon} ${name} | ${desc}`.trim();
+        }
+        return `${icon} ${name}`.trim();
       })
       .filter(Boolean)
       .join("\n");
   }
+
+  updateManageCounters();
 }
 
 function handleSaveManage() {
   const studentArea = document.getElementById("manageStudentsText");
   const roleArea = document.getElementById("manageRolesText");
 
+  // 학생 명단 파싱 (줄바꿈 또는 쉼표 분리 허용)
   if (studentArea) {
-    const rawLines = studentArea.value
-      .split("\n")
-      .map(s => sanitizeString(s))
-      .filter(s => s.length > 0 && s !== "[object Object]");
+    const rawStudents = studentArea.value
+      .split(/[\n,]/)
+      .map(s => extractCleanStudentName(s))
+      .filter(Boolean);
 
-    if (rawLines.length > 0) {
-      state.students = rawLines;
+    if (rawStudents.length > 0) {
+      state.students = rawStudents;
+    } else {
+      showToast("⚠️ 최소 1명 이상의 학생 이름을 입력해야 합니다.");
+      return;
     }
   }
 
+  // 역할 목록 파싱 (이모지, 이름, 설명 분리)
   if (roleArea) {
     const rawRoleLines = roleArea.value
       .split("\n")
-      .map(s => s.trim())
-      .filter(s => s.length > 0 && s !== "[object Object]");
+      .map(s => extractCleanString(s))
+      .filter(Boolean);
 
     if (rawRoleLines.length > 0) {
-      state.roles = rawRoleLines.map((line, idx) => {
+      state.roles = rawRoleLines.map((rawLine, idx) => {
+        let line = rawLine;
         let icon = "⭐";
-        let name = line;
+        let name = "";
         let desc = "";
 
-        // 유니코드 이모지 안전 매칭
-        const emojiMatch = line.match(/^(\p{Extended_Pictographic}|\p{Emoji_Presentation}|[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}])/u);
-        if (emojiMatch) {
-          icon = emojiMatch[0];
-          line = line.replace(emojiMatch[0], "").trim();
-        }
+        // 앞자리 번호(1. 등) 제거
+        line = line.replace(/^[\d]{1,2}[\s.\-)]+\s*/, "").trim();
 
-        // 구분자(|) 처리
-        if (line.includes("|")) {
+        // 탭(\t) 또는 파이프(|) 구분자 지원
+        if (line.includes("\t")) {
+          const parts = line.split("\t");
+          name = parts[0].trim();
+          desc = parts.slice(1).join(" ").trim();
+        } else if (line.includes("|")) {
           const parts = line.split("|");
           name = parts[0].trim();
           desc = parts.slice(1).join("|").trim();
@@ -599,8 +684,16 @@ function handleSaveManage() {
           name = line.trim();
         }
 
-        name = sanitizeString(name, `역할 ${idx + 1}`);
-        desc = sanitizeString(desc, "");
+        // 선두 이모지 추출
+        const firstToken = name.split(" ")[0];
+        // 이모지 여부 체크 (한글/영숫자가 아닌 경우)
+        if (firstToken && /^[\uD800-\uDBFF][\uDC00-\uDFFF]|\p{Emoji}|\p{Extended_Pictographic}/u.test(firstToken)) {
+          icon = firstToken;
+          name = name.substring(firstToken.length).trim();
+        }
+
+        name = extractCleanString(name, `역할 ${idx + 1}`);
+        desc = extractCleanString(desc, "");
 
         return {
           id: idx + 1,
@@ -609,13 +702,16 @@ function handleSaveManage() {
           desc: desc
         };
       });
+    } else {
+      showToast("⚠️ 최소 1개 이상의 역할을 입력해야 합니다.");
+      return;
     }
   }
 
   saveToStorage();
   renderCards();
   closeModal("manageModal");
-  showToast("명단 및 역할이 성공적으로 저장되었습니다.");
+  showToast("✅ 학생 명단과 역할 목록이 안전하게 저장되었습니다.");
 }
 
 function handleResetManage() {
@@ -626,22 +722,22 @@ function handleResetManage() {
     saveToStorage();
     populateManageModal();
     renderCards();
-    showToast("기본값으로 복원되었습니다.");
+    showToast("기본 데이터로 복원되었습니다.");
   }
 }
 
-// 11. 단일 카드 역할 변경 (스왑) 모달
+// 11. 단일 카드 담당 학생 수동 변경 (스왑) 모달
 let currentTargetRoleId = null;
 
 window.openRoleChangeModal = function(roleId) {
   currentTargetRoleId = Number(roleId);
-  const role = state.roles.find(r => r.id === currentTargetRoleId);
+  const role = state.roles.find(r => Number(r.id) === currentTargetRoleId);
   if (!role) return;
 
-  const assigned = state.assignments.find(a => (a.roleId === currentTargetRoleId) || (a.role && a.role.id === currentTargetRoleId));
-  let currentStudent = assigned ? sanitizeString(assigned.studentName || assigned.student) : "";
-  if (!currentStudent || currentStudent === "[object Object]") {
-    currentStudent = "배정 없음";
+  const assigned = state.assignments.find(a => Number(a.roleId) === currentTargetRoleId);
+  let currentStudent = assigned ? extractCleanStudentName(assigned.studentName) : "";
+  if (!currentStudent) {
+    currentStudent = "배정 없음 (공석)";
   }
 
   const titleEl = document.getElementById("roleChangeStudentTitle");
@@ -653,10 +749,10 @@ window.openRoleChangeModal = function(roleId) {
   if (select) {
     select.innerHTML = `<option value="">-- 배정 안 함 (공석) --</option>`;
     state.students.forEach(student => {
-      const studentClean = sanitizeString(student);
+      const studentClean = extractCleanStudentName(student);
       if (!studentClean) return;
 
-      const otherAssigned = state.assignments.find(a => sanitizeString(a.studentName || a.student) === studentClean);
+      const otherAssigned = state.assignments.find(a => extractCleanStudentName(a.studentName) === studentClean);
       const roleText = otherAssigned ? ` (현재: ${otherAssigned.roleName || otherAssigned.role?.name || ''})` : " (미배정)";
       const isSelected = studentClean === currentStudent ? "selected" : "";
       select.innerHTML += `<option value="${escapeHtml(studentClean)}" ${isSelected}>${escapeHtml(studentClean)}${escapeHtml(roleText)}</option>`;
@@ -670,17 +766,17 @@ function handleConfirmRoleChange() {
   if (currentTargetRoleId === null) return;
 
   const select = document.getElementById("roleChangeSelect");
-  const selectedStudent = select ? sanitizeString(select.value) : "";
-  const role = state.roles.find(r => r.id === currentTargetRoleId);
+  const selectedStudent = select ? extractCleanStudentName(select.value) : "";
+  const role = state.roles.find(r => Number(r.id) === currentTargetRoleId);
   if (!role) return;
 
-  const currentAssigned = state.assignments.find(a => a.roleId === currentTargetRoleId);
-  const previousStudent = currentAssigned ? sanitizeString(currentAssigned.studentName) : "";
+  const currentAssigned = state.assignments.find(a => Number(a.roleId) === currentTargetRoleId);
+  const previousStudent = currentAssigned ? extractCleanStudentName(currentAssigned.studentName) : "";
 
-  // 스왑 처리 (상대방이 다른 역할을 맡고 있었다면 맞바꾸기)
+  // 스왑 처리 (새로 선택한 학생이 이미 다른 역할을 맡고 있었다면 맞바꿈)
   if (selectedStudent) {
-    const otherAssignment = state.assignments.find(a => sanitizeString(a.studentName) === selectedStudent);
-    if (otherAssignment && otherAssignment.roleId !== currentTargetRoleId) {
+    const otherAssignment = state.assignments.find(a => extractCleanStudentName(a.studentName) === selectedStudent);
+    if (otherAssignment && Number(otherAssignment.roleId) !== currentTargetRoleId) {
       otherAssignment.studentName = previousStudent;
     }
   }
@@ -707,7 +803,7 @@ function handleConfirmRoleChange() {
 function handleSaveGasUrl() {
   const input = document.getElementById("gasUrlInput");
   if (input) {
-    state.gasUrl = sanitizeString(input.value);
+    state.gasUrl = extractCleanString(input.value);
     saveToStorage();
     playAppleSound('click');
     showToast("Apps Script Web App URL이 저장되었습니다.");
@@ -715,9 +811,9 @@ function handleSaveGasUrl() {
 }
 
 async function handleFetchFromSheet() {
-  const url = state.gasUrl || sanitizeString(document.getElementById("gasUrlInput")?.value);
+  const url = state.gasUrl || extractCleanString(document.getElementById("gasUrlInput")?.value);
   if (!url) {
-    showToast("⚠️ Apps Script Web App URL을 입력하세요.");
+    showToast("⚠️ Apps Script Web App URL을 먼저 입력하세요.");
     return;
   }
 
@@ -730,14 +826,14 @@ async function handleFetchFromSheet() {
 
     if (data && (Array.isArray(data.students) || Array.isArray(data.roles))) {
       if (Array.isArray(data.students) && data.students.length > 0) {
-        state.students = data.students.map(s => sanitizeString(s)).filter(Boolean);
+        state.students = data.students.map(s => extractCleanStudentName(s)).filter(Boolean);
       }
       if (Array.isArray(data.roles) && data.roles.length > 0) {
         state.roles = data.roles.map((r, i) => ({
           id: Number(r.id) || i + 1,
-          name: sanitizeString(r.name, `역할 ${i + 1}`),
-          icon: sanitizeString(r.icon, "⭐"),
-          desc: sanitizeString(r.desc || r.duty, "")
+          name: extractCleanString(r.name, `역할 ${i + 1}`),
+          icon: extractCleanString(r.icon, "⭐"),
+          desc: extractCleanString(r.desc, "")
         }));
       }
       saveToStorage();
@@ -756,9 +852,9 @@ async function handleFetchFromSheet() {
 }
 
 async function handleSaveToSheet() {
-  const url = state.gasUrl || sanitizeString(document.getElementById("gasUrlInput")?.value);
+  const url = state.gasUrl || extractCleanString(document.getElementById("gasUrlInput")?.value);
   if (!url) {
-    showToast("⚠️ Apps Script Web App URL을 입력하세요.");
+    showToast("⚠️ Apps Script Web App URL을 먼저 입력하세요.");
     return;
   }
 
@@ -773,7 +869,17 @@ async function handleSaveToSheet() {
   const payload = {
     className: state.className,
     termName: state.termName,
-    assignments: state.assignments
+    assignments: state.assignments.map(a => ({
+      number: a.number || 1,
+      studentName: extractCleanStudentName(a.studentName),
+      roleName: extractCleanString(a.roleName || a.role?.name, ""),
+      role: {
+        id: a.role?.id || a.roleId || 1,
+        name: extractCleanString(a.role?.name || a.roleName, "역할"),
+        icon: extractCleanString(a.role?.icon, "⭐"),
+        desc: extractCleanString(a.role?.desc, "")
+      }
+    }))
   };
 
   try {
@@ -797,20 +903,20 @@ async function handleSaveToSheet() {
 // 13. 결과 텍스트 복사 (알림장 및 메신저 전송용)
 function handleCopyResult() {
   if (state.assignments.length === 0) {
-    showToast("⚠️ 먼저 역할을 배정해 주세요.");
+    showToast("⚠️ 먼저 [역할 배정하기]를 눌러 배정을 완료해 주세요.");
     return;
   }
 
   let text = `📢 [${state.className} 1인 1역할 배정표 - ${state.termName}]\n\n`;
   state.roles.forEach((role, idx) => {
-    const assigned = state.assignments.find(a => a.roleId === role.id || a.role?.id === role.id);
-    const student = assigned ? sanitizeString(assigned.studentName) : "미배정";
+    const assigned = state.assignments.find(a => Number(a.roleId) === Number(role.id));
+    const student = assigned ? extractCleanStudentName(assigned.studentName) : "미배정";
     text += `${idx + 1}. ${role.icon || '⭐'} ${role.name}: ${student}\n   (${role.desc || ''})\n`;
   });
 
   navigator.clipboard.writeText(text).then(() => {
     playAppleSound('click');
-    showToast("📋 배정 결과가 클립보드에 복사되었습니다! 알림장에 붙여넣으세요.");
+    showToast("📋 배정 결과가 복사되었습니다! 알림장/메신저에 붙여넣으세요.");
   }).catch(() => {
     showToast("클립보드 접근 권한을 확인하세요.");
   });
@@ -832,7 +938,7 @@ function showToast(message) {
   const toast = document.getElementById("toastNotice");
   if (!toast) return;
 
-  toast.textContent = sanitizeString(message);
+  toast.textContent = extractCleanString(message, "");
   toast.classList.add("show");
 
   if (toastTimeout) clearTimeout(toastTimeout);
@@ -841,7 +947,7 @@ function showToast(message) {
   }, 2800);
 }
 
-// 15. 초기 로드 및 DOM 바인딩
+// 15. 초기화 및 이벤트 리스너 바인딩
 document.addEventListener("DOMContentLoaded", () => {
   loadFromStorage();
 
@@ -850,7 +956,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (classInput) {
     classInput.value = state.className;
     classInput.addEventListener("input", (e) => {
-      state.className = sanitizeString(e.target.value, "3학년 2반");
+      state.className = extractCleanString(e.target.value, "3학년 2반");
       saveToStorage();
       updatePrintHeader();
     });
@@ -860,7 +966,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (termInput) {
     termInput.value = state.termName;
     termInput.addEventListener("input", (e) => {
-      state.termName = sanitizeString(e.target.value, "2026학년도 1학기");
+      state.termName = extractCleanString(e.target.value, "2026학년도 1학기");
       saveToStorage();
       updatePrintHeader();
     });
@@ -886,9 +992,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btnDoSaveSheet")?.addEventListener("click", handleSaveToSheet);
   document.getElementById("btnCopyGasCode")?.addEventListener("click", handleCopyGasCode);
 
-  // 관리 모달 액션
+  // 관리 모달 액션 & 실시간 입력 카운터 감지
   document.getElementById("btnSaveManage")?.addEventListener("click", handleSaveManage);
   document.getElementById("btnResetManage")?.addEventListener("click", handleResetManage);
+
+  document.getElementById("manageStudentsText")?.addEventListener("input", updateManageCounters);
+  document.getElementById("manageRolesText")?.addEventListener("input", updateManageCounters);
 
   // 단일 역할 변경 확인
   document.getElementById("btnConfirmRoleChange")?.addEventListener("click", handleConfirmRoleChange);

@@ -1,62 +1,51 @@
 /* ==========================================================================
    우리 반 1인 1역할 배정 시스템 - style.css (Apple Pink Edition)
-   애플 쿠퍼티노 미니멀리즘 디자인, 프로스티드 글래스, 벤토 그리드, A4 인쇄
-   주 테마 컬러: Apple Signature Pink (#FF2D55)
+   모던 애플(Apple) 감성의 부드러운 핑크 테마 & Bento Grid & A4 인쇄
    ========================================================================== */
 
-/* 1. 디자인 시스템 토큰 (Apple Pink Palette) */
-:root {
-  --font-sf: 'Pretendard', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
-  --font-inter: 'Inter', -apple-system, sans-serif;
+/* 1. 기본 리셋 & CSS 변수 */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+:root {
   /* Apple Pink Palette */
   --apple-pink: #FF2D55;
-  --apple-pink-hover: #E61E45;
-  --apple-pink-active: #CC1238;
+  --apple-pink-hover: #E02448;
+  --apple-pink-active: #C71B3C;
   --apple-pink-tint: #FFF0F4;
-  --apple-pink-tint-hover: #FFE2EB;
+  --apple-pink-light: #FFE4EC;
   --apple-pink-border: #FFCCD8;
-  --apple-pink-glow: rgba(255, 45, 85, 0.28);
+  --apple-pink-glow: rgba(255, 45, 85, 0.22);
 
-  /* Canvas & Text */
-  --apple-canvas: #FFF6F8;
-  --apple-card: #FFFFFF;
+  /* Apple Neutral Palette */
+  --apple-canvas: #FAF9FB;
+  --apple-bg: #FFFFFF;
+  --apple-surface: #F5F5F7;
+  --apple-surface-hover: #EBEBEF;
+  --apple-border: rgba(0, 0, 0, 0.08);
+  --apple-border-subtle: rgba(0, 0, 0, 0.04);
+  --apple-hairline: rgba(0, 0, 0, 0.12);
+
+  /* Typography */
   --apple-text-primary: #1D1D1F;
   --apple-text-secondary: #86868B;
   --apple-text-tertiary: #A1A1A6;
-  --apple-border: rgba(255, 45, 85, 0.12);
-  --apple-border-subtle: rgba(0, 0, 0, 0.05);
-  --apple-hairline: #F4DFE5;
-
-  /* Auxiliary Tints */
-  --apple-green: #34C759;
-  --apple-green-tint: #EDFAF0;
-  --apple-orange: #FF9500;
-  --apple-purple: #AF52DE;
-
-  /* Frosted Glass */
-  --apple-glass-bg: rgba(255, 255, 255, 0.88);
-  --apple-glass-border: rgba(255, 255, 255, 0.7);
+  --font-sf: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
 
   /* Shadows */
-  --apple-shadow-sm: 0 2px 8px rgba(255, 45, 85, 0.04);
-  --apple-shadow-card: 0 4px 20px rgba(180, 50, 80, 0.06);
-  --apple-shadow-hover: 0 14px 34px rgba(255, 45, 85, 0.14);
-  --apple-shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.18);
-  --apple-shadow-button: 0 4px 16px rgba(255, 45, 85, 0.35);
+  --apple-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --apple-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --apple-shadow-hover: 0 12px 32px rgba(255, 45, 85, 0.14), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --apple-shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(255, 45, 85, 0.12);
 
-  /* Radii */
+  /* Radius */
   --radius-pill: 980px;
   --radius-card: 20px;
   --radius-bento: 24px;
-  --radius-modal: 22px;
-}
-
-/* 2. 글로벌 리셋 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  --radius-modal: 26px;
 }
 
 body.apple-theme {
@@ -64,100 +53,112 @@ body.apple-theme {
   background-color: var(--apple-canvas);
   color: var(--apple-text-primary);
   line-height: 1.5;
-  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
 
-.app-container {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 0 20px 80px;
-}
-
-/* 3. Apple 글로벌 네비게이션 바 (Frosted Glass) */
+/* 2. 상단 애플 글로벌 네비게이션 바 (Frosted Glass) */
 .apple-nav-wrapper {
   position: sticky;
   top: 0;
-  z-index: 100;
-  background-color: var(--apple-glass-bg);
+  z-index: 1000;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid var(--apple-border);
+  border-bottom: 1px solid var(--apple-hairline);
+  transition: all 0.25s ease;
 }
 
 .apple-nav-container {
-  max-width: 1180px;
+  max-width: 1140px;
   margin: 0 auto;
-  height: 52px;
+  padding: 0 24px;
+  height: 54px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
 }
 
 .apple-nav-brand {
   display: flex;
   align-items: center;
-  gap: 7px;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--apple-text-primary);
+  gap: 8px;
   user-select: none;
 }
 
 .apple-logo {
-  font-size: 1.15rem;
-  line-height: 1;
+  font-size: 1.25rem;
   color: var(--apple-pink);
+  line-height: 1;
+}
+
+.brand-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--apple-text-primary);
 }
 
 .brand-badge {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  background-color: var(--apple-pink-tint);
-  color: var(--apple-pink);
   padding: 2px 7px;
-  border-radius: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--apple-pink-tint);
+  color: var(--apple-pink);
   border: 1px solid var(--apple-pink-border);
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
 }
 
 .apple-nav-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .apple-nav-link {
   background: transparent;
   border: none;
   font-family: var(--font-sf);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 500;
   color: var(--apple-text-secondary);
-  cursor: pointer;
   padding: 6px 12px;
   border-radius: var(--radius-pill);
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  transition: all 0.15s ease;
+  gap: 6px;
+  transition: all 0.18s ease;
 }
 
 .apple-nav-link:hover {
   color: var(--apple-pink);
-  background-color: var(--apple-pink-tint);
+  background: var(--apple-pink-tint);
 }
 
-/* 4. Apple 필(Pill) 버튼 시스템 */
+.apple-nav-link.active-link {
+  color: var(--apple-pink);
+  font-weight: 600;
+}
+
+/* 3. 전체 레이아웃 컨테이너 */
+.app-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+/* 4. 애플 스타일 캡슐 버튼 (Pill Buttons) */
 .apple-btn-pill {
   font-family: var(--font-sf);
   font-size: 0.88rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
-  padding: 8px 18px;
+  padding: 9px 18px;
   border-radius: var(--radius-pill);
   border: 1px solid transparent;
   cursor: pointer;
@@ -167,235 +168,183 @@ body.apple-theme {
   gap: 7px;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
-  outline: none;
-}
-
-.apple-btn-pill:hover {
-  transform: scale(1.02);
+  user-select: none;
+  text-decoration: none;
 }
 
 .apple-btn-pill:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
-/* 메인 핑크 프라이머리 버튼 */
 .apple-btn-primary {
-  background-color: var(--apple-pink);
+  background: linear-gradient(135deg, #FF5277 0%, #FF2D55 100%);
   color: #FFFFFF;
-  box-shadow: var(--apple-shadow-button);
+  box-shadow: 0 4px 14px var(--apple-pink-glow);
 }
 
 .apple-btn-primary:hover {
-  background-color: var(--apple-pink-hover);
-  box-shadow: 0 6px 20px rgba(255, 45, 85, 0.45);
+  background: linear-gradient(135deg, #FF3D66 0%, #E02448 100%);
+  box-shadow: 0 6px 18px var(--apple-pink-glow);
+  transform: translateY(-1px);
 }
 
 .apple-btn-secondary {
-  background-color: var(--apple-pink-tint);
-  color: var(--apple-pink);
-  border: 1px solid var(--apple-pink-border);
+  background-color: var(--apple-surface);
+  color: var(--apple-text-primary);
 }
 
 .apple-btn-secondary:hover {
-  background-color: var(--apple-pink-tint-hover);
+  background-color: var(--apple-surface-hover);
+  color: var(--apple-pink);
 }
 
 .apple-btn-outline {
-  background-color: transparent;
+  background-color: #FFFFFF;
   color: var(--apple-pink);
-  border-color: var(--apple-pink);
+  border-color: var(--apple-pink-border);
 }
 
 .apple-btn-outline:hover {
   background-color: var(--apple-pink-tint);
+  border-color: var(--apple-pink);
 }
 
 .apple-btn-ghost {
   background-color: transparent;
   color: var(--apple-text-secondary);
-  border: 1px solid var(--apple-hairline);
 }
 
 .apple-btn-ghost:hover {
+  background-color: rgba(0, 0, 0, 0.05);
   color: var(--apple-text-primary);
-  background-color: #FFFFFF;
-  border-color: #D1D1D6;
 }
 
 .apple-btn-danger {
-  background-color: #FFF0F0;
-  color: #FF3B30;
-  border: 1px solid #FFCCD0;
+  background-color: #FFF1F0;
+  color: #FF4D4F;
+  border-color: #FFA39E;
 }
 
 .apple-btn-danger:hover {
-  background-color: #FFE5E5;
+  background-color: #FF4D4F;
+  color: #FFFFFF;
 }
 
-/* 5. Apple 키노트 스타일 히어로 섹션 */
+/* 5. 애플 키노트 스타일 히어로 섹션 */
 .apple-hero-section {
   text-align: center;
-  padding: 44px 20px 32px;
-  margin-bottom: 24px;
+  padding: 30px 16px 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .apple-kicker {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--apple-pink);
-  background-color: var(--apple-pink-tint);
+  background: var(--apple-pink-tint);
   border: 1px solid var(--apple-pink-border);
-  padding: 5px 16px;
+  padding: 4px 14px;
   border-radius: var(--radius-pill);
-  margin-bottom: 16px;
-  box-shadow: 0 2px 10px rgba(255, 45, 85, 0.1);
-}
-
-.apple-hero-headline {
-  font-size: clamp(2.4rem, 5.2vw, 3.8rem);
-  font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.1;
-  color: var(--apple-text-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--apple-pink);
+  letter-spacing: 0.04em;
   margin-bottom: 14px;
 }
 
+.apple-hero-headline {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--apple-text-primary);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
 .apple-hero-subhead {
-  font-size: clamp(1.05rem, 2vw, 1.25rem);
-  font-weight: 400;
+  font-size: 1.1rem;
   color: var(--apple-text-secondary);
-  letter-spacing: -0.015em;
   line-height: 1.55;
-  max-width: 660px;
-  margin: 0 auto 20px;
+  max-width: 600px;
+  margin-bottom: 24px;
   word-break: keep-all;
 }
 
-/* 상단 귀여운 아이들 일러스트 프레임 (Apple Keynote Style) */
+/* 상단 귀여운 아이들 일러스트 박스 */
 .apple-hero-illustration-box {
-  max-width: 680px;
-  margin: 0 auto 28px;
-  position: relative;
+  width: 100%;
+  max-width: 760px;
+  margin-bottom: 24px;
 }
 
 .apple-hero-illustration-frame {
   width: 100%;
-  border-radius: 26px;
+  border-radius: 24px;
   overflow: hidden;
-  border: 3px solid #FFE2EB;
-  box-shadow: 0 14px 34px rgba(255, 45, 85, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04);
-  background: linear-gradient(135deg, #FFF0F4 0%, #FFFFFF 100%);
-  position: relative;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 10px 30px rgba(255, 45, 85, 0.12), 0 2px 10px rgba(0, 0, 0, 0.04);
+  border: 2px solid #FFE4EE;
+  background-color: #FFF5F8;
 }
 
-.apple-hero-illustration-frame:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 40px rgba(255, 45, 85, 0.18);
-}
-
-.apple-hero-img {
+.apple-hero-svg {
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.apple-hero-illustration-frame:hover .apple-hero-img {
-  transform: scale(1.02);
-}
-
-.apple-hero-fallback-graphic {
-  padding: 38px 20px;
-  background: linear-gradient(135deg, #FFF0F4 0%, #FFE2EC 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 28px;
-}
-
-.fallback-character {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.fallback-character.active {
-  transform: scale(1.1);
-}
-
-.fallback-emoji {
-  width: 60px;
-  height: 60px;
-  border-radius: 18px;
-  background: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(255, 45, 85, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  border: 1.5px solid #FFCCD8;
-}
-
-.fallback-label {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--apple-pink);
 }
 
 .apple-hero-illustration-caption {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--apple-pink);
-  margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--apple-pink);
 }
 
-/* 애플 스타일 캡슐 인라인 설정 바 */
+.dot-sep {
+  color: var(--apple-pink-border);
+}
+
+/* 세그먼트 인라인 설정 바 */
 .apple-inline-bar {
   display: inline-flex;
   align-items: center;
   background-color: #FFFFFF;
+  border: 1px solid var(--apple-hairline);
   padding: 6px 16px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--apple-pink-border);
-  box-shadow: var(--apple-shadow-card);
+  box-shadow: var(--apple-shadow-sm);
   gap: 12px;
 }
 
 .bar-segment {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .segment-label {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--apple-pink);
-  letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 
 .apple-input-inline {
   border: none;
   background: transparent;
   font-family: var(--font-sf);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--apple-text-primary);
   outline: none;
-  width: 120px;
-  text-align: center;
-  padding: 4px 6px;
+  width: 110px;
+  padding: 3px 6px;
   border-radius: 6px;
   transition: background-color 0.15s;
 }
@@ -412,19 +361,19 @@ body.apple-theme {
 
 /* 6. 애플 메인 액션 컨트롤 & 스펙 통계 바 */
 .apple-action-deck {
-  margin-bottom: 36px;
+  margin-bottom: 32px;
 }
 
 .apple-deck-card {
   background-color: #FFFFFF;
   border-radius: var(--radius-bento);
   border: 1px solid var(--apple-border);
-  padding: 24px 32px;
+  padding: 20px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: var(--apple-shadow-card);
-  gap: 24px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -462,7 +411,7 @@ body.apple-theme {
 
 .spec-caption {
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--apple-text-secondary);
 }
 
@@ -479,7 +428,7 @@ body.apple-theme {
 
 .apple-bento-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 20px;
 }
 
@@ -500,7 +449,7 @@ body.apple-theme {
   flex-direction: column;
   justify-content: space-between;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  min-height: 230px;
+  min-height: 220px;
   position: relative;
 }
 
@@ -512,7 +461,7 @@ body.apple-theme {
 
 /* 카드 상단 바 */
 .card-header-bar {
-  padding: 14px 18px 10px;
+  padding: 14px 18px 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -555,7 +504,7 @@ body.apple-theme {
 }
 
 .card-role-name {
-  font-size: 1.18rem;
+  font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: -0.015em;
   color: var(--apple-text-primary);
@@ -563,10 +512,10 @@ body.apple-theme {
 }
 
 .card-role-desc {
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: var(--apple-text-secondary);
   line-height: 1.45;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   word-break: keep-all;
   flex: 1;
 }
@@ -646,9 +595,7 @@ body.apple-theme {
   100% { transform: scale(1.02); }
 }
 
-/* ==========================================================================
-   3, 2, 1 카운트다운 화면 (Apple Keynote 모드 감성)
-   ========================================================================== */
+/* 8. 3, 2, 1 카운트다운 화면 (Apple Keynote 모드) */
 .countdown-overlay {
   display: none;
   position: fixed;
@@ -710,7 +657,7 @@ body.apple-theme {
 }
 
 .countdown-number {
-  font-size: 5rem;
+  font-size: 4.8rem;
   line-height: 1;
   font-weight: 800;
   color: var(--apple-pink);
@@ -729,14 +676,12 @@ body.apple-theme {
 }
 
 .countdown-cheer {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   color: var(--apple-text-primary);
 }
 
-/* ==========================================================================
-   애플 스타일 모달 팝업 & 세그먼트 탭
-   ========================================================================== */
+/* 9. 애플 스타일 모달 팝업 & 세그먼트 탭 */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -826,7 +771,7 @@ body.apple-theme {
   border-bottom-right-radius: var(--radius-modal);
 }
 
-/* 세그먼트 컨트롤 탭 (Segmented Control) */
+/* 세그먼트 컨트롤 탭 */
 .apple-segmented-tabs {
   background-color: #F0F0F3;
   padding: 3px;
@@ -840,7 +785,7 @@ body.apple-theme {
   flex: 1;
   background: transparent;
   border: none;
-  padding: 7px 12px;
+  padding: 8px 12px;
   border-radius: 8px;
   font-family: var(--font-sf);
   font-size: 0.85rem;
@@ -848,6 +793,10 @@ body.apple-theme {
   color: var(--apple-text-secondary);
   cursor: pointer;
   transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .tab-btn.active {
@@ -856,17 +805,37 @@ body.apple-theme {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
+.tab-counter-badge {
+  font-size: 0.72rem;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  background: var(--apple-pink-tint);
+  color: var(--apple-pink);
+  font-weight: 700;
+}
+
 /* 폼 스타일 */
 .form-group {
   margin-bottom: 16px;
 }
 
+.form-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
 .form-label {
-  display: block;
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--apple-text-primary);
-  margin-bottom: 6px;
+}
+
+.form-count-hint {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--apple-pink);
 }
 
 .form-input,
@@ -882,6 +851,7 @@ body.apple-theme {
   background-color: #FFFFFF;
   color: var(--apple-text-primary);
   transition: border-color 0.2s, box-shadow 0.2s;
+  line-height: 1.5;
 }
 
 .form-input:focus,
@@ -889,6 +859,12 @@ body.apple-theme {
 .apple-select:focus {
   border-color: var(--apple-pink);
   box-shadow: 0 0 0 3px rgba(255, 45, 85, 0.18);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 140px;
+  font-family: inherit;
 }
 
 .form-help {
@@ -900,7 +876,6 @@ body.apple-theme {
 
 .modal-actions-row {
   display: flex;
-  align-items: center;
   gap: 8px;
   margin-top: 14px;
   flex-wrap: wrap;
@@ -911,54 +886,55 @@ body.apple-theme {
   border: 1px solid var(--apple-pink-border);
   border-radius: 12px;
   padding: 12px 16px;
-  font-size: 0.85rem;
-  color: #922240;
-  line-height: 1.5;
   margin-top: 16px;
+  font-size: 0.82rem;
+  color: var(--apple-pink);
+  line-height: 1.45;
 }
 
 .code-snippet-box {
-  background-color: #1D1D1F;
+  background: #1D1D1F;
   color: #F5F5F7;
   padding: 14px;
-  border-radius: 10px;
-  font-family: monospace;
-  font-size: 0.8rem;
+  border-radius: 12px;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.45;
   overflow-x: auto;
-  white-space: pre-wrap;
-  max-height: 160px;
+  max-height: 220px;
 }
 
-/* 8. 햅틱 플로팅 알림 토스트 */
+/* 10. 플로팅 알림 토스트 */
 .toast-notice {
   position: fixed;
-  bottom: 24px;
+  bottom: 30px;
   left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background-color: rgba(29, 29, 31, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(29, 29, 31, 0.9);
   color: #FFFFFF;
   padding: 12px 24px;
   border-radius: var(--radius-pill);
+  font-size: 0.88rem;
+  font-weight: 600;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  font-size: 0.9rem;
-  font-weight: 500;
-  z-index: 9999;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 6000;
   opacity: 0;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
   white-space: nowrap;
 }
 
 .toast-notice.show {
-  transform: translateX(-50%) translateY(0);
   opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
-/* ==========================================================================
-   교실 게시판 부착용 A4 인쇄 스타일 (@media print)
-   ========================================================================== */
+/* 11. 인쇄 전용 스타일 (@media print) */
 .print-only-header,
 .print-only-footer {
   display: none;
@@ -967,26 +943,19 @@ body.apple-theme {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 8mm 10mm 8mm 10mm;
-  }
-
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
+    margin: 12mm 10mm;
   }
 
   body.apple-theme {
     background-color: #FFFFFF !important;
     color: #000000 !important;
-    font-size: 11pt !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    font-size: 10pt;
   }
 
   .apple-nav-wrapper,
   .apple-hero-section,
   .apple-action-deck,
+  .btn-card-swap,
   .card-footer-actions,
   .countdown-overlay,
   .modal-overlay,
@@ -1000,45 +969,42 @@ body.apple-theme {
     margin: 0 !important;
   }
 
-  /* 인쇄 전용 헤더 */
   .print-only-header {
     display: block !important;
     text-align: center;
-    border-bottom: 2px solid #000000;
-    padding-bottom: 12px;
     margin-bottom: 14px;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 8px;
   }
 
   .print-top-line {
-    height: 3px;
-    background-color: #000000;
-    margin-bottom: 8px;
+    width: 60px;
+    height: 4px;
+    background: #FF2D55;
+    margin: 0 auto 6px;
+    border-radius: 2px;
   }
 
   .print-header-title {
-    font-size: 21pt;
+    font-size: 20pt;
     font-weight: 800;
     letter-spacing: -0.02em;
-    margin-bottom: 6px;
-    color: #000000;
+    margin-bottom: 4px;
   }
 
   .print-header-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 10pt;
-    font-weight: 600;
-    color: #333333;
-    padding: 0 4px;
+    font-size: 9pt;
+    color: #444444;
   }
 
   .print-motto {
-    font-style: italic;
-    color: #555555;
+    font-weight: 600;
+    color: #222222;
   }
 
-  /* 인쇄용 카드 그리드: 3열 균등 배치 (12개 카드가 A4 1장에 꼭 맞음) */
   .apple-bento-grid {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
@@ -1046,64 +1012,56 @@ body.apple-theme {
   }
 
   .role-card {
-    border: 1.5px solid #222222 !important;
+    border: 1.5px solid #000000 !important;
     box-shadow: none !important;
-    border-radius: 8px !important;
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-    transform: none !important;
-    background-color: #FFFFFF !important;
-    padding: 8px 10px !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
     min-height: 125px !important;
-    max-height: 135px !important;
+    border-radius: 10px !important;
+    background: #FFFFFF !important;
   }
 
   .card-header-bar {
-    padding: 0 0 6px !important;
-    border-bottom: 1px solid #DDDDDD !important;
+    padding: 8px 10px 4px !important;
   }
 
   .card-student-number {
-    font-size: 8.5pt !important;
-    border: 1px solid #555555 !important;
-    background-color: #FFFFFF !important;
+    border: 1px solid #000000 !important;
     color: #000000 !important;
+    background: #F0F0F0 !important;
+    font-size: 8pt !important;
   }
 
   .card-role-badge {
-    width: 28px !important;
-    height: 28px !important;
-    font-size: 16px !important;
-    border: 1px solid #CCCCCC !important;
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 1.1rem !important;
+    border: 1px solid #000000 !important;
+    background: #F5F5F5 !important;
   }
 
   .card-body-content {
-    padding: 6px 0 0 !important;
+    padding: 2px 10px 8px !important;
   }
 
   .card-role-name {
-    font-size: 12pt !important;
+    font-size: 11pt !important;
     font-weight: 800 !important;
     color: #000000 !important;
     margin-bottom: 2px !important;
   }
 
   .card-role-desc {
-    font-size: 8.5pt !important;
-    line-height: 1.3 !important;
-    color: #444444 !important;
+    font-size: 8pt !important;
+    color: #333333 !important;
     margin-bottom: 6px !important;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    line-height: 1.3 !important;
   }
 
   .card-assigned-block {
-    background-color: #F8F8F8 !important;
-    border: 1.5px solid #333333 !important;
-    padding: 4px 8px !important;
-    border-radius: 6px !important;
+    border: 1px solid #000000 !important;
+    background: #FAFAFA !important;
+    padding: 5px 8px !important;
   }
 
   .assigned-label {
@@ -1112,19 +1070,68 @@ body.apple-theme {
   }
 
   .assigned-name {
-    font-size: 12pt !important;
-    font-weight: 800 !important;
+    font-size: 11pt !important;
+    font-weight: 900 !important;
     color: #000000 !important;
-    letter-spacing: 0.08em !important;
   }
 
   .print-only-footer {
     display: block !important;
-    margin-top: 12px;
-    padding-top: 6px;
-    border-top: 1px dashed #777777;
+    margin-top: 16px;
+    padding-top: 8px;
+    border-top: 1px solid #777777;
+    font-size: 8pt;
     text-align: center;
-    font-size: 8.5pt;
-    color: #555555;
+    color: #444444;
+  }
+}
+
+/* 12. 반응형 미디어 쿼리 */
+@media (max-width: 768px) {
+  .apple-nav-container {
+    padding: 0 16px;
+  }
+
+  .brand-badge {
+    display: none;
+  }
+
+  .apple-hero-headline {
+    font-size: 2.1rem;
+  }
+
+  .apple-hero-subhead {
+    font-size: 0.95rem;
+  }
+
+  .apple-deck-card {
+    padding: 16px 20px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .action-buttons-group {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .apple-specs-row {
+    justify-content: space-around;
+    width: 100%;
+    padding-top: 12px;
+    border-top: 1px solid var(--apple-hairline);
+  }
+
+  .countdown-modal-box {
+    padding: 32px 24px;
+  }
+
+  .countdown-circle {
+    width: 110px;
+    height: 110px;
+  }
+
+  .countdown-number {
+    font-size: 3.8rem;
   }
 }

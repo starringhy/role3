@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>우리 반 1인 1역할 - Apple 스타일 학급 배정 시스템</title>
-  <meta name="description" content="애플의 정제된 미니멀리즘 디자인을 담은 초등학교 1인 1역할 무작위 배정 및 A4 인쇄 시스템" />
-  <meta property="og:title" content="우리 반 1인 1역할 - Apple 스타일 학급 배정 시스템" />
-  <meta property="og:description" content="애플 스타일의 세련된 디자인과 부드러운 인터랙션을 제공하는 학급 역할 배정 웹 애플리케이션" />
+  <title>우리 반 1인 1역할 - Apple 핑크 에디션</title>
+  <meta name="description" content="초등학교 교실을 위한 애플 스타일 핑크 테마 1인 1역할 무작위 배정, 관리 및 A4 인쇄 시스템" />
+  <meta property="og:title" content="우리 반 1인 1역할 - Apple 핑크 에디션" />
+  <meta property="og:description" content="초등학교 교실을 위한 애플 스타일 핑크 테마 1인 1역할 무작위 배정, 관리 및 A4 인쇄 시스템" />
   <meta property="og:type" content="website" />
   
-  <!-- Apple San Francisco 느낌의 초정밀 폰트 Pretendard & Inter -->
+  <!-- Apple San Francisco & Pretendard 폰트 -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body class="apple-theme">
-  <!-- 상단 애플 글로벌 네비게이션 바 (Frosted Glass) -->
+  <!-- 1. 상단 애플 글로벌 네비게이션 바 (Frosted Glass) -->
   <header class="apple-nav-wrapper">
     <div class="apple-nav-container">
       <div class="apple-nav-brand">
@@ -35,7 +35,7 @@
         <button id="btnSheetSave" class="apple-nav-link" type="button" title="구글 스프레드시트에 배정 결과 전송">
           <span class="nav-icon">💾</span> 시트에 결과 저장
         </button>
-        <button id="btnManage" class="apple-nav-link" type="button" title="학생 명단 및 역할 목록 편집">
+        <button id="btnManage" class="apple-nav-link active-link" type="button" title="학생 명단 및 역할 목록 편집">
           <span class="nav-icon">⚙️</span> 명단 및 역할 관리
         </button>
         <button id="btnPrint" class="apple-btn-pill apple-btn-outline" type="button" title="게시판 부착용 A4 인쇄">
@@ -46,7 +46,7 @@
   </header>
 
   <div class="app-container">
-    <!-- 1. 애플 키노트 스타일 히어로 섹션 -->
+    <!-- 2. 애플 키노트 스타일 히어로 섹션 -->
     <section class="apple-hero-section">
       <div class="apple-kicker">
         <span class="kicker-glow">✨</span>
@@ -58,46 +58,170 @@
       </h1>
 
       <p class="apple-hero-subhead">
-        한 사람 한 사람의 소중한 책임이 만드는 완성도 높은 교실.<br />
+        한 사람 한 사람의 소중한 책임이 만드는 완성도 높은 우리 교실.<br />
         놀랍도록 공정하고, 직관적으로.
       </p>
 
-      <!-- 상단 귀여운 학급 아이들 일러스트 -->
+      <!-- 상단 귀여운 학급 아이들 일러스트 (자체 내장 고화질 벡터 SVG) -->
       <div class="apple-hero-illustration-box">
         <div class="apple-hero-illustration-frame">
-          <img 
-            src="./assets/classroom_children.jpg" 
-            alt="학급 역할을 씩씩하고 즐겁게 돕는 우리 반 아이들 일러스트" 
-            class="apple-hero-img" 
-            loading="eager"
-            onerror="this.style.display='none'; document.getElementById('heroSvgFallback').style.display='flex';"
-          />
-          <!-- 깃허브 복사 시 이미지 파일이 없어도 즉시 작동하는 SVG 그래픽 폴백 -->
-          <div id="heroSvgFallback" class="apple-hero-fallback-graphic" style="display: none;">
-            <div class="fallback-character">
-              <span class="fallback-emoji">🌱</span>
-              <span class="fallback-label">화분 친구</span>
-            </div>
-            <div class="fallback-character active">
-              <span class="fallback-emoji">🧼</span>
-              <span class="fallback-label">칠판 도우미</span>
-            </div>
-            <div class="fallback-character">
-              <span class="fallback-emoji">📚</span>
-              <span class="fallback-label">도서 반장</span>
-            </div>
-          </div>
+          <svg class="apple-hero-svg" viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" aria-label="역할을 씩씩하게 실천하는 우리 반 아이들">
+            <defs>
+              <linearGradient id="bgSky" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFF5F8" />
+                <stop offset="100%" stop-color="#FFE4EE" />
+              </linearGradient>
+              <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FF5277" />
+                <stop offset="100%" stop-color="#FF2D55" />
+              </linearGradient>
+              <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFD666" />
+                <stop offset="100%" stop-color="#FFA940" />
+              </linearGradient>
+              <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#69C0FF" />
+                <stop offset="100%" stop-color="#1890FF" />
+              </linearGradient>
+              <linearGradient id="mintGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#95DE64" />
+                <stop offset="100%" stop-color="#52C41A" />
+              </linearGradient>
+              <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#FF2D55" flood-opacity="0.15" />
+              </filter>
+            </defs>
+
+            <!-- 부드러운 배경 캔버스 -->
+            <rect width="760" height="260" rx="24" fill="url(#bgSky)" />
+
+            <!-- 장식 배경 요소: 구름, 반짝이 별, 음표 -->
+            <circle cx="90" cy="50" r="28" fill="#FFFFFF" opacity="0.6" />
+            <circle cx="120" cy="45" r="35" fill="#FFFFFF" opacity="0.7" />
+            <circle cx="150" cy="55" r="25" fill="#FFFFFF" opacity="0.6" />
+
+            <circle cx="610" cy="50" r="28" fill="#FFFFFF" opacity="0.6" />
+            <circle cx="640" cy="45" r="35" fill="#FFFFFF" opacity="0.7" />
+            <circle cx="670" cy="55" r="25" fill="#FFFFFF" opacity="0.6" />
+
+            <!-- 반짝이 별들 -->
+            <path d="M 50 110 Q 50 95 60 95 Q 50 95 50 80 Q 50 95 40 95 Q 50 95 50 110 Z" fill="#FFB3C7" />
+            <path d="M 700 130 Q 700 115 710 115 Q 700 115 700 100 Q 700 115 690 115 Q 700 115 700 130 Z" fill="#FFB3C7" />
+            <path d="M 380 40 Q 380 30 388 30 Q 380 30 380 20 Q 380 30 372 30 Q 380 30 380 40 Z" fill="#FFA940" />
+
+            <!-- 캐릭터 1: 화분 가꾸기 도우미 (남자아이 민준) -->
+            <g transform="translate(130, 45)" filter="url(#softGlow)">
+              <!-- 몸통 -->
+              <rect x="35" y="95" width="50" height="55" rx="14" fill="#69C0FF" />
+              <!-- 팔 & 물뿌리개 -->
+              <path d="M 85 110 L 105 125" stroke="#FFE2B8" stroke-width="10" stroke-linecap="round" />
+              <rect x="105" y="115" width="22" height="18" rx="4" fill="#FFD666" />
+              <path d="M 127 120 L 138 115" stroke="#FFA940" stroke-width="3" stroke-linecap="round" />
+              <!-- 물방울 -->
+              <circle cx="145" cy="122" r="3" fill="#40A9FF" />
+              <circle cx="150" cy="130" r="2.5" fill="#40A9FF" />
+              <!-- 얼굴 -->
+              <circle cx="60" cy="65" r="32" fill="#FFE2B8" />
+              <!-- 머리카락 -->
+              <path d="M 28 60 Q 32 30 60 30 Q 88 30 92 60 Q 80 50 60 50 Q 40 50 28 60 Z" fill="#4A3B32" />
+              <!-- 볼터치 -->
+              <circle cx="43" cy="72" r="6" fill="#FF94A8" opacity="0.6" />
+              <circle cx="77" cy="72" r="6" fill="#FF94A8" opacity="0.6" />
+              <!-- 눈 & 입 -->
+              <circle cx="48" cy="64" r="3.5" fill="#2D3748" />
+              <circle cx="72" cy="64" r="3.5" fill="#2D3748" />
+              <path d="M 54 73 Q 60 80 66 73" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round" />
+              <!-- 역할 뱃지 & 화분 -->
+              <g transform="translate(140, 125)">
+                <path d="M 0 15 L 6 38 L 26 38 L 32 15 Z" fill="#D48872" />
+                <path d="M 16 15 Q 16 0 10 -4 Q 22 2 16 15 Z" fill="#52C41A" />
+                <path d="M 16 15 Q 16 2 24 -2 Q 18 10 16 15 Z" fill="#73D13D" />
+              </g>
+              <!-- 이름표 태그 -->
+              <rect x="25" y="158" width="70" height="24" rx="12" fill="#FFFFFF" stroke="#E2E8F0" />
+              <text x="60" y="174" font-size="11" font-weight="700" fill="#1890FF" text-anchor="middle" font-family="'Pretendard', sans-serif">🌱 화분 도우미</text>
+            </g>
+
+            <!-- 캐릭터 2: 칠판 도우미 (센터 여자아이 서아 - 핑크 원피스) -->
+            <g transform="translate(320, 25)" filter="url(#softGlow)">
+              <!-- 반짝이 후광 -->
+              <circle cx="65" cy="70" r="52" fill="#FFE4EE" opacity="0.8" />
+              <!-- 원피스 몸통 -->
+              <path d="M 40 105 L 90 105 L 102 165 L 28 165 Z" fill="url(#pinkGrad)" rx="12" />
+              <circle cx="65" cy="120" r="4" fill="#FFFFFF" />
+              <circle cx="65" cy="135" r="4" fill="#FFFFFF" />
+              <!-- 팔 & 칠판 지우개 -->
+              <path d="M 88 115 L 115 100" stroke="#FFE2B8" stroke-width="10" stroke-linecap="round" />
+              <!-- 지우개 -->
+              <rect x="110" y="85" width="28" height="16" rx="4" fill="#389E0D" transform="rotate(-15 110 85)" />
+              <rect x="110" y="99" width="28" height="6" rx="2" fill="#8C8C8C" transform="rotate(-15 110 99)" />
+              <!-- 얼굴 -->
+              <circle cx="65" cy="65" r="34" fill="#FFE2B8" />
+              <!-- 양갈래 머리 -->
+              <circle cx="28" cy="65" r="14" fill="#3D291F" />
+              <circle cx="102" cy="65" r="14" fill="#3D291F" />
+              <!-- 머리 리본 -->
+              <path d="M 26 50 L 34 56 L 24 60 Z" fill="#FF2D55" />
+              <path d="M 104 50 L 96 56 L 106 60 Z" fill="#FF2D55" />
+              <!-- 앞머리 -->
+              <path d="M 32 60 Q 65 30 98 60 Q 65 52 32 60 Z" fill="#3D291F" />
+              <!-- 볼터치 -->
+              <circle cx="47" cy="73" r="7" fill="#FF85A0" opacity="0.7" />
+              <circle cx="83" cy="73" r="7" fill="#FF85A0" opacity="0.7" />
+              <!-- 반짝이는 눈 & 입 -->
+              <circle cx="52" cy="64" r="4" fill="#2D3748" />
+              <circle cx="53.5" cy="62.5" r="1.5" fill="#FFFFFF" />
+              <circle cx="78" cy="64" r="4" fill="#2D3748" />
+              <circle cx="79.5" cy="62.5" r="1.5" fill="#FFFFFF" />
+              <path d="M 58 75 Q 65 84 72 75" stroke="#2D3748" stroke-width="2.8" fill="none" stroke-linecap="round" />
+              <!-- 이름표 태그 -->
+              <rect x="25" y="178" width="80" height="26" rx="13" fill="#FFFFFF" stroke="#FFB3C7" stroke-width="1.5" />
+              <text x="65" y="195" font-size="12" font-weight="800" fill="#FF2D55" text-anchor="middle" font-family="'Pretendard', sans-serif">🧼 칠판 도우미</text>
+            </g>
+
+            <!-- 캐릭터 3: 도서 & 학습 도우미 (남자아이 도윤) -->
+            <g transform="translate(510, 45)" filter="url(#softGlow)">
+              <!-- 몸통 -->
+              <rect x="35" y="95" width="50" height="55" rx="14" fill="#52C41A" />
+              <!-- 책을 품에 안은 모습 -->
+              <rect x="55" y="105" width="30" height="38" rx="4" fill="#FA8C16" />
+              <rect x="52" y="112" width="28" height="35" rx="4" fill="#1890FF" />
+              <path d="M 35 120 Q 55 130 65 122" stroke="#FFE2B8" stroke-width="9" stroke-linecap="round" />
+              <!-- 얼굴 -->
+              <circle cx="60" cy="65" r="32" fill="#FFE2B8" />
+              <!-- 안경 -->
+              <circle cx="48" cy="65" r="11" fill="none" stroke="#FF7A45" stroke-width="2.5" />
+              <circle cx="72" cy="65" r="11" fill="none" stroke="#FF7A45" stroke-width="2.5" />
+              <line x1="59" y1="65" x2="61" y2="65" stroke="#FF7A45" stroke-width="2.5" />
+              <!-- 머리카락 (단정한 스타일) -->
+              <path d="M 28 62 Q 35 28 60 28 Q 85 28 92 62 Q 80 48 60 48 Q 40 48 28 62 Z" fill="#261A15" />
+              <!-- 볼터치 -->
+              <circle cx="43" cy="74" r="6" fill="#FF94A8" opacity="0.6" />
+              <circle cx="77" cy="74" r="6" fill="#FF94A8" opacity="0.6" />
+              <!-- 눈 & 미소 -->
+              <circle cx="48" cy="65" r="3" fill="#2D3748" />
+              <circle cx="72" cy="65" r="3" fill="#2D3748" />
+              <path d="M 54 75 Q 60 81 66 75" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round" />
+              <!-- 이름표 태그 -->
+              <rect x="25" y="158" width="70" height="24" rx="12" fill="#FFFFFF" stroke="#E2E8F0" />
+              <text x="60" y="174" font-size="11" font-weight="700" fill="#389E0D" text-anchor="middle" font-family="'Pretendard', sans-serif">📚 도서 도우미</text>
+            </g>
+          </svg>
         </div>
         <div class="apple-hero-illustration-caption">
-          <span>🌱 화분 가꾸기</span>
-          <span>·</span>
-          <span>🧼 칠판 정리하기</span>
-          <span>·</span>
-          <span>📚 학급문고 정돈하기</span>
+          <span>🌱 화분 돌보기</span>
+          <span class="dot-sep">·</span>
+          <span>🧼 칠판 깨끗이</span>
+          <span class="dot-sep">·</span>
+          <span>📚 도서 정돈</span>
+          <span class="dot-sep">·</span>
+          <span>🍱 급식 질서</span>
+          <span class="dot-sep">·</span>
+          <span>♻️ 분리수거</span>
         </div>
       </div>
 
-      <!-- 애플 스타일 세그먼트 인라인 설정 바 -->
+      <!-- 애플 스타일 세그먼트 인라인 설정 바 (학급 / 기간 즉시 수정) -->
       <div class="apple-inline-bar">
         <div class="bar-segment">
           <span class="segment-label">학급</span>
@@ -111,7 +235,7 @@
       </div>
     </section>
 
-    <!-- 2. 애플 메인 액션 컨트롤 & 스펙 통계 바 -->
+    <!-- 3. 애플 메인 액션 컨트롤 & 스펙 통계 바 -->
     <section class="apple-action-deck">
       <div class="apple-deck-card">
         <div class="action-buttons-group">
@@ -122,7 +246,7 @@
           <button id="btnReshuffle" class="apple-btn-pill apple-btn-secondary" type="button">
             <span>🔀</span> 다시 섞기
           </button>
-          <button id="btnCopyResult" class="apple-btn-pill apple-btn-ghost" type="button" title="알림장이나 학급 메신저에 붙여넣기할 수 있는 텍스트 복사">
+          <button id="btnCopyResult" class="apple-btn-pill apple-btn-ghost" type="button" title="알림장이나 학급 메신저에 바로 붙여넣을 수 있는 텍스트 복사">
             <span>📋</span> 결과 텍스트 복사
           </button>
         </div>
@@ -141,13 +265,13 @@
           <div class="spec-separator" aria-hidden="true"></div>
           <div class="spec-unit">
             <span class="spec-value highlight" id="statAssignedCount">12 / 12</span>
-            <span class="spec-caption">배정 현황</span>
+            <span class="spec-caption">배정 완료</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 3. 인쇄 시에만 나타나는 전용 A4 헤더 -->
+    <!-- 4. 인쇄 시에만 나타나는 전용 A4 헤더 -->
     <div class="print-only-header">
       <div class="print-top-line"></div>
       <h2 id="printTitle" class="print-header-title">우리 반 1인 1역할 배정표</h2>
@@ -158,10 +282,10 @@
       </div>
     </div>
 
-    <!-- 4. 애플 벤토(Bento) 카드 그리드 -->
+    <!-- 5. 애플 벤토(Bento) 카드 그리드 -->
     <main class="grid-container-wrapper">
       <div id="assignmentGrid" class="apple-bento-grid">
-        <!-- script.js에 의해 애플 스타일 카드가 동적으로 렌더링됩니다 -->
+        <!-- script.js에 의해 애플 핑크 스타일 카드가 동적으로 렌더링됩니다 -->
       </div>
     </main>
 
@@ -214,7 +338,7 @@
           </div>
 
           <div id="sheetSyncStatus" class="apple-callout-box">
-            구글 시트 URL을 등록하면 학생 명단과 역할을 실시간으로 가져오고 배정 결과를 시트에 보관할 수 있습니다.
+            구글 시트 URL을 등록하면 학생 명단과 역할을 실시간으로 가져오고 배정 결과를 시트에 안전하게 보관할 수 있습니다.
           </div>
         </div>
 
@@ -230,13 +354,13 @@
   var students = [];
   var roles = [];
   for (var i = 1; i &lt; data.length; i++) {
-    if (data[i][0]) students.push(data[i][0]);
+    if (data[i][0]) students.push(String(data[i][0]).trim());
     if (data[i][1]) {
       roles.push({
         id: i,
-        name: data[i][1],
-        icon: data[i][2] || '⭐',
-        desc: data[i][3] || ''
+        name: String(data[i][1]).trim(),
+        icon: data[i][2] ? String(data[i][2]).trim() : '⭐',
+        desc: data[i][3] ? String(data[i][3]).trim() : ''
       });
     }
   }
@@ -253,7 +377,15 @@ function doPost(e) {
   sheet.clear();
   sheet.appendRow(['번호', '학생 이름', '역할', '아이콘', '설명', '배정일시']);
   data.assignments.forEach(function(item) {
-    sheet.appendRow([item.number, item.studentName, item.role.name, item.role.icon, item.role.desc, new Date()]);
+    var role = item.role || {};
+    sheet.appendRow([
+      item.number || 1,
+      item.studentName || '',
+      item.roleName || role.name || '',
+      role.icon || '⭐',
+      role.desc || '',
+      new Date()
+    ]);
   });
   return ContentService.createTextOutput(JSON.stringify({ status: 'success' }))
          .setMimeType(ContentService.MimeType.JSON);
@@ -283,25 +415,35 @@ function doPost(e) {
 
       <div class="modal-body">
         <div class="apple-segmented-tabs">
-          <button class="tab-btn active" type="button" data-tab="tabManageStudents">학생 명단</button>
-          <button class="tab-btn" type="button" data-tab="tabManageRoles">역할 목록</button>
+          <button class="tab-btn active" id="tabBtnStudents" type="button" data-tab="tabManageStudents">
+            학생 명단 <span class="tab-counter-badge" id="badgeStudentCount">12명</span>
+          </button>
+          <button class="tab-btn" id="tabBtnRoles" type="button" data-tab="tabManageRoles">
+            역할 목록 <span class="tab-counter-badge" id="badgeRoleCount">12개</span>
+          </button>
         </div>
 
         <!-- 탭 1: 학생 명단 -->
         <div id="tabManageStudents" class="tab-pane">
           <div class="form-group">
-            <label class="form-label" for="manageStudentsText">학생 명단 (1줄에 1명씩 입력)</label>
-            <textarea id="manageStudentsText" class="form-textarea" rows="8" placeholder="김민준&#10;이서아&#10;박도윤..."></textarea>
-            <span class="form-help">줄바꿈으로 자동 구분됩니다. (현재 12명 기본 세팅)</span>
+            <div class="form-label-row">
+              <label class="form-label" for="manageStudentsText">학생 명단 (1줄에 1명씩 입력)</label>
+              <span class="form-count-hint" id="studentCountHint">현재 12명 등록됨</span>
+            </div>
+            <textarea id="manageStudentsText" class="form-textarea" rows="9" placeholder="김민준&#10;이서아&#10;박도윤..."></textarea>
+            <span class="form-help">줄바꿈 또는 쉼표(,)로 구분됩니다. 엑셀이나 한글 명렬표에서 복사해 바로 붙여넣을 수 있습니다.</span>
           </div>
         </div>
 
         <!-- 탭 2: 역할 목록 -->
         <div id="tabManageRoles" class="tab-pane" style="display: none;">
           <div class="form-group">
-            <label class="form-label" for="manageRolesText">역할 목록 (형식: [이모지] 역할명 | 설명)</label>
-            <textarea id="manageRolesText" class="form-textarea" rows="8" placeholder="🧼 칠판 도우미 | 쉬는 시간마다 칠판 닦기&#10;🥛 우유 도우미 | 우유 배부하기..."></textarea>
-            <span class="form-help">형식: [이모지] 역할명 | 역할 설명</span>
+            <div class="form-label-row">
+              <label class="form-label" for="manageRolesText">역할 목록 (형식: [이모지] 역할명 | 설명)</label>
+              <span class="form-count-hint" id="roleCountHint">현재 12개 등록됨</span>
+            </div>
+            <textarea id="manageRolesText" class="form-textarea" rows="9" placeholder="🧼 칠판 도우미 | 쉬는 시간마다 칠판 정리하기&#10;🥛 우유 도우미 | 아침 우유 수량 확인 및 배부..."></textarea>
+            <span class="form-help">형식: [이모지] 역할명 | 설명 (설명이나 이모지는 생략 가능)</span>
           </div>
         </div>
       </div>
@@ -321,18 +463,18 @@ function doPost(e) {
     <div class="modal-content apple-sheet-modal" style="max-width: 440px;">
       <div class="modal-header">
         <div class="modal-title-wrap">
-          <h2 id="roleChangeStudentTitle" class="modal-title">역할 변경</h2>
+          <h2 id="roleChangeStudentTitle" class="modal-title">담당 학생 변경</h2>
         </div>
         <button class="btn-modal-close" type="button" aria-label="닫기">&times;</button>
       </div>
 
       <div class="modal-body">
         <div class="form-group">
-          <label class="form-label" for="roleChangeSelect">새로운 역할 선택</label>
+          <label class="form-label" for="roleChangeSelect">배정할 학생 선택</label>
           <select id="roleChangeSelect" class="apple-select">
-            <!-- 자바스크립트로 역할 목록 옵션 생성 -->
+            <!-- 자바스크립트로 학생 명단 옵션 생성 -->
           </select>
-          <span class="form-help">해당 학생에게 부여할 최적의 역할을 선택하세요.</span>
+          <span class="form-help">이미 다른 역할을 맡은 학생을 선택하면 서로 맞바꾸어(스왑) 배정됩니다.</span>
         </div>
       </div>
 
@@ -346,7 +488,7 @@ function doPost(e) {
   <!-- 애플 스타일 플로팅 햅틱 토스트 알림 -->
   <div id="toastNotice" class="toast-notice" role="status" aria-live="polite"></div>
 
-  <!-- 스크립트 연결 -->
+  <!-- 스크립트 연결 (GitHub Pages 호스팅 호환) -->
   <script src="./script.js"></script>
 </body>
 </html>
