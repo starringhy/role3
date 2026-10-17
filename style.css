@@ -1,59 +1,45 @@
 /* ==========================================================================
-   우리 반 1인 1역할 배정기 - style.css
-   초등학생 눈높이에 맞춘 다정하고 산뜻한 파스텔톤 디자인
+   우리 반 1인 1역할 배정기 (Classgram) - style.css
+   모던하고 깔끔한 인스타그램(Instagram) 감성의 피드 & 스토리 디자인
    교실 게시판 부착용 A4 인쇄(@media print) 완벽 지원
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
-  /* 파스텔 테마 색상 (연한 분홍색 테마) */
-  --bg-main: #FFF0F4;
-  --bg-card: #FFFFFF;
-  --text-main: #2D3748;
-  --text-muted: #718096;
-  --text-light: #A0AEC0;
-  
-  /* 포인트 파스텔 컬러 */
-  --primary-coral: #FF708F;
-  --primary-coral-hover: #F25779;
-  --primary-peach: #FF9E79;
-  --pastel-mint-bg: #E8F8F2;
-  --pastel-mint-border: #A7E9D0;
-  --pastel-mint-text: #176548;
-  
-  --pastel-sky-bg: #EAF4FF;
-  --pastel-sky-border: #B6DAFF;
-  --pastel-sky-text: #19528C;
-  
-  --pastel-yellow-bg: #FFF9DB;
-  --pastel-yellow-border: #FFE58F;
-  --pastel-yellow-text: #8C6B00;
-  
-  --pastel-pink-bg: #FFE5EE;
-  --pastel-pink-border: #FFAEC5;
-  --pastel-pink-text: #8C2448;
-  
-  --pastel-purple-bg: #F5EEFD;
-  --pastel-purple-border: #DBC0FA;
-  --pastel-purple-text: #592B8F;
-  
-  --pastel-orange-bg: #FFF0E6;
-  --pastel-orange-border: #FFC4A1;
-  --pastel-orange-text: #943A08;
+  /* 인스타그램 시그니처 색상 & 모던 뉴트럴 */
+  --ig-bg: #FAFAFA;
+  --ig-card-bg: #FFFFFF;
+  --ig-border: #DBDBDB;
+  --ig-border-light: #EFEFEF;
+  --ig-text-main: #262626;
+  --ig-text-secondary: #737373;
+  --ig-text-light: #8E8E8E;
+  --ig-link: #0095F6;
+  --ig-link-hover: #1877F2;
 
-  --border-subtle: #F3DEE5;
-  --radius-lg: 20px;
-  --radius-md: 14px;
+  /* 인스타그램 시그니처 스토리 그라디언트 */
+  --ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  --ig-gradient-soft: linear-gradient(135deg, #FF7A00 0%, #FF0169 50%, #D300C5 100%);
+  --ig-gradient-warm: linear-gradient(135deg, #FFF0F5 0%, #FFF5EB 100%);
+
+  /* 파스텔 틴트 (포스트 비주얼 영역) */
+  --post-bg-sky: linear-gradient(180deg, #EBF5FF 0%, #F5F9FF 100%);
+  --post-bg-pink: linear-gradient(180deg, #FFF0F6 0%, #FFF8FA 100%);
+  --post-bg-yellow: linear-gradient(180deg, #FFFBEB 0%, #FFFDF5 100%);
+  --post-bg-mint: linear-gradient(180deg, #ECFDF5 0%, #F6FEF9 100%);
+  --post-bg-purple: linear-gradient(180deg, #F5F3FF 0%, #FAF8FF 100%);
+  --post-bg-orange: linear-gradient(180deg, #FFF7ED 0%, #FFFCF8 100%);
+
+  --radius-story: 50%;
+  --radius-card: 16px;
   --radius-sm: 8px;
-  
-  --shadow-sm: 0 2px 6px rgba(220, 120, 150, 0.06);
-  --shadow-md: 0 6px 18px rgba(215, 110, 140, 0.1);
-  --shadow-lg: 0 14px 32px rgba(215, 110, 140, 0.16);
-  --shadow-button: 0 4px 14px rgba(255, 112, 143, 0.4);
+
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
 }
 
-/* 기본 리셋 및 전역 설정 */
+/* 기본 리셋 */
 * {
   margin: 0;
   padding: 0;
@@ -61,322 +47,368 @@
 }
 
 body {
-  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: var(--bg-main);
-  background-image: 
-    radial-gradient(#F7D5E0 1.2px, transparent 1.2px),
-    radial-gradient(#F7D5E0 1.2px, var(--bg-main) 1.2px);
-  background-size: 26px 26px;
-  background-position: 0 0, 13px 13px;
-  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 'Noto Sans KR', Helvetica, Arial, sans-serif;
+  background-color: var(--ig-bg);
+  color: var(--ig-text-main);
   line-height: 1.5;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* 제목용 다정한 폰트 */
-.font-jua {
-  font-family: 'Jua', 'Noto Sans KR', sans-serif;
-  letter-spacing: 0.02em;
+/* 인스타그램 로고용 폰트 */
+.font-logo {
+  font-family: 'Grand Hotel', cursive;
+  letter-spacing: 0.01em;
 }
 
-/* 전체 래퍼 */
+/* 메인 래퍼 */
 .app-container {
-  max-width: 1240px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 24px 20px 60px;
+  padding: 16px 16px 80px;
   width: 100%;
   flex: 1;
 }
 
 /* ==========================================================================
-   상단 헤더 및 네비게이션
+   인스타그램 스타일 상단 네비게이션 헤더
    ========================================================================== */
-.main-header {
-  background: #FFFFFF;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 20px 28px;
-  margin-bottom: 24px;
-  box-shadow: var(--shadow-md);
+.ig-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--ig-border);
+  padding: 0 20px;
+}
+
+.ig-navbar-inner {
+  max-width: 1080px;
+  height: 60px;
+  margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
 }
 
-.brand-section {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.brand-icon {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(135deg, #FFE4EC 0%, #FFF0D9 100%);
-  border: 1.5px solid #FFC8D6;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  box-shadow: var(--shadow-sm);
-  user-select: none;
-}
-
-.title-box {
-  display: flex;
-  flex-direction: column;
-}
-
-.class-badge-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.class-title-input {
-  font-family: 'Jua', 'Noto Sans KR', sans-serif;
-  font-size: 1.55rem;
-  font-weight: 700;
-  color: #2D3748;
-  border: 1px dashed transparent;
-  background: transparent;
-  padding: 2px 6px;
-  border-radius: var(--radius-sm);
-  outline: none;
-  transition: all 0.2s ease;
-  width: auto;
-  max-width: 320px;
-}
-
-.class-title-input:hover,
-.class-title-input:focus {
-  border-color: #CBD5E0;
-  background: #F7FAFC;
-}
-
-.app-subtitle {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* 상단 우측 버튼 그룹 */
-.header-actions {
+/* 로고 영역 */
+.ig-brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: wrap;
+  text-decoration: none;
+  color: var(--ig-text-main);
 }
 
-/* 버튼 공통 스타일 */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 18px;
-  font-size: 0.95rem;
+.ig-logo-text {
+  font-size: 2.1rem;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--ig-text-main);
+  background: var(--ig-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-top: 4px;
+}
+
+.ig-class-tag {
+  font-size: 0.8rem;
   font-weight: 600;
-  border-radius: var(--radius-md);
-  border: none;
+  color: var(--ig-text-secondary);
+  background: #F0F2F5;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  white-space: nowrap;
-  user-select: none;
   outline: none;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s;
 }
 
-.btn:hover {
-  transform: translateY(-1.5px);
+.ig-class-tag:hover,
+.ig-class-tag:focus {
+  background: #FFFFFF;
+  border-color: var(--ig-border);
 }
 
-.btn:active {
-  transform: translateY(0);
-}
-
-.btn:focus-visible {
-  box-shadow: 0 0 0 3px rgba(255, 112, 143, 0.4);
-}
-
-/* 구글 시트 연동 버튼들 */
-.btn-sheet-load {
-  background-color: #EBF8FF;
-  border: 1.5px solid #BEE3F8;
-  color: #2B6CB0;
-}
-
-.btn-sheet-load:hover {
-  background-color: #DDEEFF;
-  border-color: #90CDF4;
-  box-shadow: var(--shadow-sm);
-}
-
-.btn-sheet-save {
-  background-color: #E6FFFA;
-  border: 1.5px solid #B2F5EA;
-  color: #234E52;
-}
-
-.btn-sheet-save:hover {
-  background-color: #D2F7EE;
-  border-color: #81E6D9;
-  box-shadow: var(--shadow-sm);
-}
-
-.btn-print {
-  background-color: #F7FAFC;
-  border: 1.5px solid #E2E8F0;
-  color: #4A5568;
-}
-
-.btn-print:hover {
-  background-color: #EDF2F7;
-  color: #2D3748;
-  box-shadow: var(--shadow-sm);
-}
-
-.btn-manage {
-  background-color: #FAF5FF;
-  border: 1.5px solid #E9D8FD;
-  color: #6B46C1;
-}
-
-.btn-manage:hover {
-  background-color: #F3E8FF;
-  box-shadow: var(--shadow-sm);
-}
-
-/* 메인 대형 추첨 버튼 */
-.btn-primary-roll {
-  background: linear-gradient(135deg, var(--primary-coral) 0%, var(--primary-peach) 100%);
-  color: #FFFFFF;
-  font-family: 'Jua', 'Noto Sans KR', sans-serif;
-  font-size: 1.25rem;
-  padding: 14px 32px;
-  border-radius: 18px;
-  box-shadow: var(--shadow-button);
-  letter-spacing: 0.03em;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-}
-
-.btn-primary-roll:hover {
-  background: linear-gradient(135deg, var(--primary-coral-hover) 0%, #FF8A60 100%);
-  box-shadow: 0 6px 18px rgba(255, 112, 143, 0.45);
-  transform: translateY(-2px);
-}
-
-.btn-primary-roll:active {
-  transform: translateY(1px);
-}
-
-/* ==========================================================================
-   히어로 / 컨트롤 배너 영역
-   ========================================================================== */
-.hero-banner {
-  background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF9 100%);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 24px 32px;
-  margin-bottom: 24px;
-  box-shadow: var(--shadow-md);
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.hero-main-row {
+/* 헤더 검색창 */
+.ig-search-box {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 18px;
+  background: #EFEFEF;
+  border-radius: 8px;
+  padding: 6px 14px;
+  width: 240px;
+  gap: 8px;
+  transition: background 0.2s;
 }
 
-.hero-text-block h2 {
-  font-family: 'Jua', 'Noto Sans KR', sans-serif;
-  font-size: 1.6rem;
-  color: #2D3748;
-  margin-bottom: 4px;
+.ig-search-box:focus-within {
+  background: #FFFFFF;
+  box-shadow: 0 0 0 1px #8E8E8E;
+}
+
+.ig-search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.88rem;
+  width: 100%;
+  color: var(--ig-text-main);
+}
+
+.ig-search-box input::placeholder {
+  color: var(--ig-text-light);
+}
+
+/* 헤더 버튼 그룹 */
+.ig-nav-actions {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.hero-text-block p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-}
-
-.stats-counter-strip {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-top: 14px;
-  border-top: 1px dashed #EDE5D8;
-  flex-wrap: wrap;
-}
-
-.stat-chip {
+.btn-ig-text {
+  background: transparent;
+  border: 1px solid var(--ig-border);
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ig-text-main);
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-ig-text:hover {
+  background: #F7F7F7;
+  border-color: #BDBDBD;
+}
+
+/* 인스타그램 그라디언트 배정 버튼 */
+.btn-ig-primary {
+  background: var(--ig-gradient);
+  color: #FFFFFF;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
   font-size: 0.9rem;
-  font-weight: 500;
-  color: #4A5568;
-}
-
-.stat-chip strong {
   font-weight: 700;
-  color: var(--text-main);
-  background: #EDF2F7;
-  padding: 2px 8px;
-  border-radius: 6px;
-}
-
-.stat-match-indicator {
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 12px;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 3px 10px rgba(220, 39, 67, 0.25);
+  white-space: nowrap;
 }
 
-.stat-match-indicator.matched {
-  background-color: #DEF7EC;
-  color: #03543F;
+.btn-ig-primary:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 16px rgba(220, 39, 67, 0.35);
+  filter: brightness(1.05);
 }
 
-.stat-match-indicator.mismatched {
-  background-color: #FDE8E8;
-  color: #9B1C1C;
-}
-
-.hero-quick-tips {
-  margin-left: auto;
-  font-size: 0.85rem;
-  color: #718096;
+.btn-ig-primary:active {
+  transform: translateY(0);
 }
 
 /* ==========================================================================
-   관리 패널 (학생 및 역할 목록 편집기 - 접이식)
+   인스타그램 스토리 섹션 (상단 학생 아바타 링 목록)
+   ========================================================================== */
+.stories-tray {
+  background: var(--ig-card-bg);
+  border: 1px solid var(--ig-border);
+  border-radius: var(--radius-card);
+  padding: 16px 20px;
+  margin: 20px 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  box-shadow: var(--shadow-subtle);
+}
+
+.stories-tray::-webkit-scrollbar {
+  height: 4px;
+}
+.stories-tray::-webkit-scrollbar-thumb {
+  background: #DBDBDB;
+  border-radius: 4px;
+}
+
+.story-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 68px;
+  text-align: center;
+  transition: transform 0.15s ease;
+}
+
+.story-item:hover {
+  transform: scale(1.04);
+}
+
+/* 스토리 무지개 그라디언트 링 테두리 */
+.story-ring {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  padding: 2.5px;
+  background: var(--ig-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(220, 39, 67, 0.2);
+}
+
+.story-ring.unassigned {
+  background: #E5E7EB;
+  box-shadow: none;
+}
+
+.story-avatar {
+  width: 100%;
+  height: 100%;
+  background: #FFFFFF;
+  border-radius: 50%;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  border: 2px solid #FFFFFF;
+  user-select: none;
+}
+
+.story-name {
+  font-size: 0.76rem;
+  color: var(--ig-text-main);
+  font-weight: 500;
+  max-width: 64px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   학급 프로필 헤더 (Bio & Stats 바)
+   ========================================================================== */
+.ig-profile-strip {
+  background: var(--ig-card-bg);
+  border: 1px solid var(--ig-border);
+  border-radius: var(--radius-card);
+  padding: 22px 28px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-subtle);
+}
+
+.ig-profile-info {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.ig-profile-avatar {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  padding: 3px;
+  background: var(--ig-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ig-profile-avatar-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  border: 2px solid #FFFFFF;
+}
+
+.ig-bio-texts h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ig-text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.verified-badge {
+  color: #0095F6;
+  font-size: 1rem;
+}
+
+.ig-bio-caption {
+  font-size: 0.88rem;
+  color: var(--ig-text-secondary);
+  margin-top: 3px;
+}
+
+/* 팔로워 / 통계 수치 */
+.ig-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.ig-stat-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ig-stat-val {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ig-text-main);
+}
+
+.ig-stat-lbl {
+  font-size: 0.78rem;
+  color: var(--ig-text-secondary);
+}
+
+/* ==========================================================================
+   관리 패널 (학생/역할 편집기)
    ========================================================================== */
 .management-panel {
   display: none;
   background: #FFFFFF;
-  border: 1.5px solid #E2E8F0;
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--ig-border);
+  border-radius: var(--radius-card);
   padding: 24px;
   margin-bottom: 24px;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-subtle);
   animation: slideDown 0.25s ease-out;
 }
 
@@ -385,35 +417,29 @@ body {
 }
 
 @keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .panel-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
-  padding-bottom: 14px;
-  border-bottom: 1.5px dashed #E2E8F0;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ig-border-light);
 }
 
 .panel-title {
-  font-family: 'Jua', 'Noto Sans KR', sans-serif;
-  font-size: 1.35rem;
-  color: #2D3748;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ig-text-main);
 }
 
 .panel-body-grid {
   display: grid;
   grid-template-columns: 1fr 1.3fr;
-  gap: 24px;
+  gap: 20px;
 }
 
 @media (max-width: 860px) {
@@ -423,9 +449,9 @@ body {
 }
 
 .list-edit-box {
-  background: #FAF8F5;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  background: #FAFAFA;
+  border: 1px solid var(--ig-border);
+  border-radius: 12px;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -433,60 +459,52 @@ body {
 }
 
 .list-edit-box h4 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  color: #4A5568;
+  color: var(--ig-text-main);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .list-scroll-area {
-  max-height: 280px;
+  max-height: 260px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding-right: 4px;
+  gap: 6px;
 }
 
-/* 개별 수정 태그/아이템 */
 .edit-item-row {
   display: flex;
   align-items: center;
   gap: 8px;
   background: #FFFFFF;
-  padding: 6px 10px;
+  padding: 7px 10px;
   border-radius: var(--radius-sm);
-  border: 1px solid #E2E8F0;
+  border: 1px solid var(--ig-border-light);
 }
 
 .edit-item-row input {
   border: none;
   outline: none;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   background: transparent;
   width: 100%;
-}
-
-.edit-item-row input:focus {
-  font-weight: 600;
 }
 
 .btn-remove-item {
   background: transparent;
   border: none;
-  color: #A0AEC0;
+  color: var(--ig-text-light);
   cursor: pointer;
   padding: 2px 6px;
   font-size: 1rem;
   border-radius: 4px;
-  line-height: 1;
 }
 
 .btn-remove-item:hover {
-  color: #E53E3E;
-  background: #FED7D7;
+  color: #ED4956;
 }
 
 .add-input-bar {
@@ -497,21 +515,21 @@ body {
 .add-input-bar input {
   flex: 1;
   padding: 8px 12px;
-  border: 1px solid #CBD5E0;
+  border: 1px solid var(--ig-border);
   border-radius: var(--radius-sm);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   outline: none;
 }
 
 .add-input-bar input:focus {
-  border-color: var(--primary-coral);
+  border-color: #8E8E8E;
 }
 
 .btn-add-item {
   padding: 8px 14px;
   font-size: 0.85rem;
-  background: #EDF2F7;
-  color: #4A5568;
+  background: #0095F6;
+  color: #FFFFFF;
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -519,267 +537,389 @@ body {
 }
 
 .btn-add-item:hover {
-  background: #E2E8F0;
-  color: #1A202C;
-}
-
-.panel-footer-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 20px;
-  padding-top: 14px;
-  border-top: 1px solid #EDF2F7;
+  background: #1877F2;
 }
 
 /* ==========================================================================
-   역할 카드 그리드 (메인 결과 화면)
+   인스타그램 피드 포스트 그리드 (메인 역할 카드)
    ========================================================================== */
 .cards-grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 22px;
 }
 
 @media (min-width: 1024px) {
   .cards-grid-container {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* 개별 역할 카드 */
+/* 개별 인스타그램 포스트 카드 */
 .role-card {
-  position: relative;
-  background: #FFFFFF;
-  border-radius: var(--radius-lg);
-  border: 1.5px solid #EBE5DC;
-  padding: 20px 18px;
+  background: var(--ig-card-bg);
+  border: 1px solid var(--ig-border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-subtle);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-  min-height: 220px;
 }
 
 .role-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px);
 }
 
-/* 카드 상단 번호 및 파스텔 배경 장식 */
-.role-card-header {
+/* 1. 포스트 상단 헤더 (프로필 정보) */
+.post-header {
+  padding: 12px 14px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  border-bottom: 1px solid var(--ig-border-light);
 }
 
-.role-card-number {
-  font-family: 'Jua', 'Noto Sans KR', sans-serif;
-  font-size: 0.95rem;
-  color: var(--text-light);
-  background: #F7FAFC;
-  border: 1px solid #EDF2F7;
-  border-radius: 8px;
-  padding: 2px 8px;
+.post-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.role-card-icon-box {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
+.post-avatar-ring {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  padding: 2px;
+  background: var(--ig-gradient);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.post-avatar-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  border: 1.5px solid #FFFFFF;
+}
+
+.post-user-names {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-handle {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ig-text-main);
+  line-height: 1.2;
+}
+
+.post-location {
+  font-size: 0.75rem;
+  color: var(--ig-text-secondary);
+}
+
+.btn-post-more {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--ig-text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.btn-post-more:hover {
+  color: var(--ig-text-main);
+}
+
+/* 2. 포스트 메인 비주얼 영역 (사진 느낌) */
+.post-visual-area {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background: var(--post-bg-sky);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   user-select: none;
-  transition: transform 0.2s ease;
+  overflow: hidden;
+  transition: filter 0.2s ease;
 }
 
-.role-card:hover .role-card-icon-box {
-  transform: scale(1.08) rotate(3deg);
+.post-big-icon {
+  font-size: 3.8rem;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.role-card-title {
-  font-family: 'Jua', 'Noto Sans KR', sans-serif;
-  font-size: 1.3rem;
-  color: #2D3748;
-  margin-bottom: 6px;
-  line-height: 1.3;
+.role-card:hover .post-big-icon {
+  transform: scale(1.1) rotate(4deg);
 }
 
-.role-card-duty {
-  font-size: 0.85rem;
-  color: #718096;
-  line-height: 1.45;
-  margin-bottom: 16px;
-  word-break: keep-all;
-  flex-grow: 1;
+/* 인스타그램 태그 스티커 형태의 담당 학생 배지 */
+.post-tag-sticker {
+  margin-top: 10px;
+  background: rgba(38, 38, 38, 0.82);
+  backdrop-filter: blur(6px);
+  color: #FFFFFF;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-/* 학생 이름 배정 박스 */
-.role-student-box {
-  background: #FAF8F5;
-  border: 1.5px dashed #E2D9CC;
-  border-radius: var(--radius-md);
-  padding: 10px 14px;
+.post-tag-sticker:hover {
+  background: rgba(0, 149, 246, 0.95);
+  transform: scale(1.03);
+}
+
+.post-tag-sticker.unassigned {
+  background: rgba(142, 142, 142, 0.75);
+  font-weight: 500;
+}
+
+/* 3. 포스트 하단 인터랙션 아이콘 바 */
+.post-actions-bar {
+  padding: 10px 14px 6px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: auto;
-  transition: all 0.2s ease;
 }
 
-.role-card:hover .role-student-box {
-  background: #FFFFFF;
-  border-style: solid;
+.post-actions-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-.student-label {
-  font-size: 0.8rem;
-  color: #A0AEC0;
-  font-weight: 600;
-}
-
-.student-name {
-  font-family: 'Jua', 'Noto Sans KR', sans-serif;
-  font-size: 1.35rem;
-  color: #2D3748;
-  letter-spacing: 0.05em;
-}
-
-.student-name.empty {
-  color: #CBD5E0;
-  font-style: italic;
-  font-size: 1.05rem;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-
-/* 수동 스왑/교체 버튼 */
-.btn-swap-student {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 6px;
+.btn-icon-action {
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--ig-text-main);
   cursor: pointer;
-  padding: 4px 6px;
+  line-height: 1;
+  padding: 2px;
+  transition: transform 0.15s ease;
+}
+
+.btn-icon-action:hover {
+  transform: scale(1.15);
+}
+
+.btn-icon-action.liked {
+  color: #ED4956;
+}
+
+/* 4. 포스트 캡션 및 댓글 영역 */
+.post-caption-box {
+  padding: 0 14px 14px;
+  font-size: 0.88rem;
+  color: var(--ig-text-main);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.post-likes-count {
+  font-weight: 700;
   font-size: 0.85rem;
-  color: #718096;
-  transition: all 0.15s ease;
 }
 
-.btn-swap-student:hover {
-  background: #EDF2F7;
-  color: #2D3748;
-  border-color: #CBD5E0;
+.post-caption-text {
+  line-height: 1.45;
+  word-break: keep-all;
 }
 
-/* 파스텔 테마 변형 클래스 */
-.theme-mint {
-  border-top: 5px solid #68D391;
-}
-.theme-mint .role-card-icon-box {
-  background: var(--pastel-mint-bg);
-  border: 1.5px solid var(--pastel-mint-border);
+.post-author-name {
+  font-weight: 700;
+  margin-right: 6px;
 }
 
-.theme-sky {
-  border-top: 5px solid #63B3ED;
-}
-.theme-sky .role-card-icon-box {
-  background: var(--pastel-sky-bg);
-  border: 1.5px solid var(--pastel-sky-border);
+.post-hashtags {
+  color: #00376B;
+  font-size: 0.8rem;
+  margin-top: 2px;
 }
 
-.theme-yellow {
-  border-top: 5px solid #F6E05E;
-}
-.theme-yellow .role-card-icon-box {
-  background: var(--pastel-yellow-bg);
-  border: 1.5px solid var(--pastel-yellow-border);
-}
-
-.theme-pink {
-  border-top: 5px solid #F687B3;
-}
-.theme-pink .role-card-icon-box {
-  background: var(--pastel-pink-bg);
-  border: 1.5px solid var(--pastel-pink-border);
+.post-time-stamp {
+  font-size: 0.72rem;
+  color: var(--ig-text-light);
+  margin-top: 2px;
+  text-transform: uppercase;
 }
 
-.theme-purple {
-  border-top: 5px solid #B794F4;
-}
-.theme-purple .role-card-icon-box {
-  background: var(--pastel-purple-bg);
-  border: 1.5px solid var(--pastel-purple-border);
+/* 테마별 비주얼 배경 틴트 */
+.theme-sky .post-visual-area { background: var(--post-bg-sky); }
+.theme-pink .post-visual-area { background: var(--post-bg-pink); }
+.theme-yellow .post-visual-area { background: var(--post-bg-yellow); }
+.theme-mint .post-visual-area { background: var(--post-bg-mint); }
+.theme-purple .post-visual-area { background: var(--post-bg-purple); }
+.theme-orange .post-visual-area { background: var(--post-bg-orange); }
+
+/* 추첨 롤링 중 모션 */
+.rolling .post-visual-area {
+  animation: igVisualPulse 0.18s infinite alternate;
 }
 
-.theme-orange {
-  border-top: 5px solid #FBD38D;
-}
-.theme-orange .role-card-icon-box {
-  background: var(--pastel-orange-bg);
-  border: 1.5px solid var(--pastel-orange-border);
-}
-
-/* 롤링/추첨 중 애니메이션 */
-.rolling .role-student-box {
-  background: #FFF5F5 !important;
-  border-color: #FEB2B2 !important;
-  animation: pulseGlow 0.2s infinite alternate;
-}
-
-.rolling .student-name {
-  color: var(--primary-coral) !important;
-}
-
-@keyframes pulseGlow {
-  0% { transform: scale(0.98); }
-  100% { transform: scale(1.02); }
+@keyframes igVisualPulse {
+  0% { filter: brightness(1) contrast(1); }
+  100% { filter: brightness(1.08) contrast(1.05); }
 }
 
 /* ==========================================================================
-   알림 토스트 & 모달 팝업
+   3, 2, 1 카운트다운 화면 (인스타그램 릴스/스토리 촬영 모드 감성)
+   ========================================================================== */
+.countdown-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(12px);
+  z-index: 5000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.countdown-overlay.active {
+  display: flex;
+  animation: igFadeIn 0.25s ease-out;
+}
+
+@keyframes igFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.countdown-modal-box {
+  background: #FFFFFF;
+  border-radius: 28px;
+  padding: 40px 48px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 420px;
+  width: 90%;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.countdown-story-ring {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  padding: 5px;
+  background: var(--ig-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 14px 0 20px;
+  box-shadow: 0 10px 30px rgba(220, 39, 67, 0.35);
+}
+
+.countdown-story-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.countdown-subtext {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ig-text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.countdown-number {
+  font-size: 5rem;
+  line-height: 1;
+  font-weight: 800;
+  background: var(--ig-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.countdown-number.pop {
+  animation: igNumberPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes igNumberPop {
+  0% { transform: scale(0.4); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.countdown-cheer {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ig-text-main);
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   모달 팝업 & 알림 토스트 (인스타그램 모달 스타일)
    ========================================================================== */
 .toast-notice {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: #2D3748;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: #262626;
   color: #FFFFFF;
-  padding: 12px 20px;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
-  font-size: 0.95rem;
+  padding: 12px 24px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  font-size: 0.92rem;
   font-weight: 500;
   display: flex;
   align-items: center;
   gap: 10px;
   z-index: 9999;
-  transform: translateY(100px);
   opacity: 0;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
 }
 
 .toast-notice.show {
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
   opacity: 1;
 }
 
-/* 모달 백드롭 */
 .modal-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(45, 55, 72, 0.45);
+  background: rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(4px);
-  z-index: 1000;
+  z-index: 2000;
   align-items: center;
   justify-content: center;
   padding: 20px;
@@ -791,80 +931,72 @@ body {
 
 .modal-card {
   background: #FFFFFF;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
   width: 100%;
-  max-width: 580px;
+  max-width: 520px;
   max-height: 90vh;
   overflow-y: auto;
-  border: 1px solid var(--border-subtle);
-  animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--ig-border);
+  animation: igModalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes modalPop {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+@keyframes igModalPop {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .modal-header {
-  padding: 20px 24px;
-  border-bottom: 1.5px solid #EDF2F7;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--ig-border-light);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .modal-header h3 {
-  font-family: 'Jua', 'Noto Sans KR', sans-serif;
-  font-size: 1.35rem;
-  color: #2D3748;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ig-text-main);
 }
 
 .btn-modal-close {
   background: transparent;
   border: none;
-  font-size: 1.4rem;
-  color: #A0AEC0;
+  font-size: 1.3rem;
+  color: var(--ig-text-light);
   cursor: pointer;
-  padding: 4px;
-  line-height: 1;
 }
 
 .btn-modal-close:hover {
-  color: #4A5568;
+  color: var(--ig-text-main);
 }
 
 .modal-content {
-  padding: 24px;
+  padding: 22px;
 }
 
 .modal-footer {
-  padding: 16px 24px;
-  background: #F7FAFC;
-  border-top: 1px solid #EDF2F7;
+  padding: 14px 20px;
+  background: #FAFAFA;
+  border-top: 1px solid var(--ig-border-light);
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
-  border-bottom-left-radius: var(--radius-lg);
-  border-bottom-right-radius: var(--radius-lg);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .form-group label {
   display: block;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
-  color: #4A5568;
+  color: var(--ig-text-main);
   margin-bottom: 6px;
 }
 
@@ -872,9 +1004,9 @@ body {
 .form-textarea {
   width: 100%;
   padding: 10px 14px;
-  border: 1.5px solid #E2E8F0;
-  border-radius: var(--radius-sm);
-  font-size: 0.95rem;
+  border: 1px solid var(--ig-border);
+  border-radius: 8px;
+  font-size: 0.92rem;
   outline: none;
   font-family: inherit;
   transition: border-color 0.2s;
@@ -882,141 +1014,40 @@ body {
 
 .form-input-text:focus,
 .form-textarea:focus {
-  border-color: var(--primary-coral);
+  border-color: #0095F6;
 }
 
 .info-note-box {
-  background: #FFFBEB;
-  border: 1px solid #FDE68A;
-  border-radius: var(--radius-sm);
-  padding: 12px 16px;
+  background: #F0F9FF;
+  border: 1px solid #BAE6FD;
+  border-radius: 8px;
+  padding: 12px 14px;
   font-size: 0.85rem;
-  color: #92400E;
+  color: #0369A1;
   margin-bottom: 16px;
-  line-height: 1.5;
 }
 
 .code-snippet {
-  background: #1A202C;
-  color: #E2E8F0;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
+  background: #262626;
+  color: #F5F5F5;
+  padding: 12px;
+  border-radius: 8px;
   font-family: monospace;
   font-size: 0.8rem;
   overflow-x: auto;
   white-space: pre-wrap;
-  max-height: 160px;
+  max-height: 150px;
   margin-top: 8px;
 }
 
-/* ==========================================================================
-   하단 푸터
-   ========================================================================== */
+/* 하단 푸터 */
 .app-footer {
   text-align: center;
-  padding: 20px;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  border-top: 1px solid #EBE5DC;
+  padding: 24px;
+  font-size: 0.8rem;
+  color: var(--ig-text-light);
+  border-top: 1px solid var(--ig-border);
   background: #FFFFFF;
-}
-
-/* ==========================================================================
-   3, 2, 1 카운트다운 화면 오버레이
-   ========================================================================== */
-.countdown-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(30, 20, 26, 0.65);
-  backdrop-filter: blur(8px);
-  z-index: 5000;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.countdown-overlay.active {
-  display: flex;
-  animation: fadeInOverlay 0.25s ease-out;
-}
-
-@keyframes fadeInOverlay {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.countdown-modal-box {
-  background: #FFFFFF;
-  border-radius: 32px;
-  padding: 44px 56px;
-  text-align: center;
-  box-shadow: 0 24px 60px rgba(255, 112, 143, 0.35);
-  border: 4px solid #FFE5EE;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  max-width: 440px;
-  width: 90%;
-  position: relative;
-  overflow: hidden;
-}
-
-.countdown-subtext {
-  font-family: 'Jua', 'Noto Sans KR', sans-serif;
-  font-size: 1.25rem;
-  color: var(--primary-coral);
-  margin-bottom: 8px;
-  letter-spacing: 0.03em;
-}
-
-.countdown-number {
-  font-family: 'Jua', 'Noto Sans KR', sans-serif;
-  font-size: 7.5rem;
-  line-height: 1;
-  font-weight: 800;
-  background: linear-gradient(135deg, #FF5A83 0%, #FFA07A 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 12px 0 16px;
-  filter: drop-shadow(0 6px 16px rgba(255, 112, 143, 0.3));
-  display: inline-block;
-  min-width: 140px;
-  text-align: center;
-}
-
-.countdown-number.pop {
-  animation: numberPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-}
-
-@keyframes numberPop {
-  0% {
-    transform: scale(0.35);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.22);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.countdown-cheer {
-  font-family: 'Jua', 'Noto Sans KR', sans-serif;
-  font-size: 1.2rem;
-  color: #4A5568;
-  letter-spacing: 0.02em;
-}
-
-.countdown-particles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
 }
 
 /* ==========================================================================
@@ -1028,7 +1059,7 @@ body {
 
 /* ==========================================================================
    교실 게시판 부착용 A4 인쇄 스타일 (@media print)
-   A4 1장에 딱 맞게 3x4 정갈한 그리드로 출력
+   정갈하고 깔끔한 A4 3열 x 4행 게시판 인쇄물로 최적화
    ========================================================================== */
 @media print {
   @page {
@@ -1036,7 +1067,6 @@ body {
     margin: 8mm 10mm 8mm 10mm;
   }
 
-  /* 배경색과 테두리 인쇄 강제 허용 */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -1057,46 +1087,48 @@ body {
     margin: 0 !important;
   }
 
-  /* 화면용 컨트롤, 헤더, 버튼, 모달, 푸터 숨김 */
-  .main-header,
-  .hero-banner,
+  /* 인쇄 시 불필요한 인스타그램 웹 UI 완전 숨김 */
+  .ig-navbar,
+  .stories-tray,
+  .ig-profile-strip,
   .management-panel,
+  .post-actions-bar,
+  .post-likes-count,
+  .post-hashtags,
+  .post-time-stamp,
+  .btn-post-more,
+  .countdown-overlay,
   .toast-notice,
   .modal-overlay,
-  .countdown-overlay,
-  .app-footer,
-  .btn-swap-student {
+  .app-footer {
     display: none !important;
   }
 
-  /* 인쇄용 헤더 출력 */
+  /* 인쇄 전용 게시판 헤더 출력 */
   .print-only-header {
     display: block !important;
     text-align: center;
     margin-bottom: 12px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #2D3748;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #262626;
   }
 
   .print-title {
-    font-family: 'Jua', 'Noto Sans KR', sans-serif !important;
     font-size: 20pt !important;
     font-weight: 800 !important;
-    color: #1A202C !important;
+    color: #000000 !important;
     margin-bottom: 4px !important;
   }
 
   .print-meta-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     font-size: 10pt;
     color: #4A5568;
     margin-top: 4px;
-    padding: 0 4px;
   }
 
-  /* 인쇄 그리드: 3열 x 4행으로 A4 한 페이지에 완벽히 정렬 */
+  /* A4 3x4 그리드 정렬 */
   .cards-grid-container {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
@@ -1105,79 +1137,80 @@ body {
   }
 
   .role-card {
-    border: 1.5px solid #2D3748 !important;
-    border-radius: 10px !important;
-    padding: 10px 12px !important;
-    min-height: 125px !important;
-    max-height: 135px !important;
+    border: 1.5px solid #262626 !important;
+    border-radius: 8px !important;
     box-shadow: none !important;
     transform: none !important;
     background: #FFFFFF !important;
     break-inside: avoid;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: space-between !important;
+    min-height: 125px !important;
+    max-height: 135px !important;
+    padding: 8px 10px !important;
   }
 
-  .role-card-header {
-    margin-bottom: 4px !important;
+  .post-header {
+    padding: 0 0 4px !important;
+    border-bottom: 1px solid #DBDBDB !important;
   }
 
-  .role-card-number {
-    font-size: 9pt !important;
-    padding: 1px 5px !important;
-    border: 1px solid #718096 !important;
-    color: #2D3748 !important;
+  .post-avatar-ring {
+    width: 24px !important;
+    height: 24px !important;
+    padding: 1px !important;
+    background: #262626 !important;
   }
 
-  .role-card-icon-box {
-    width: 32px !important;
-    height: 32px !important;
-    font-size: 18px !important;
-    border-radius: 8px !important;
-    margin-bottom: 4px !important;
-    border: 1px solid #CBD5E0 !important;
+  .post-avatar-inner {
+    font-size: 13px !important;
   }
 
-  .role-card-title {
-    font-size: 12.5pt !important;
-    font-weight: 700 !important;
+  .post-handle {
+    font-size: 10.5pt !important;
+    font-weight: 800 !important;
     color: #000000 !important;
-    margin-bottom: 3px !important;
   }
 
-  .role-card-duty {
+  .post-location {
+    display: none !important;
+  }
+
+  .post-visual-area {
+    height: 38px !important;
+    background: #F7FAFC !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    padding: 0 10px !important;
+    margin: 4px 0 !important;
+    border-radius: 4px !important;
+    border: 1px solid #E2E8F0 !important;
+  }
+
+  .post-big-icon {
+    font-size: 20px !important;
+  }
+
+  .post-tag-sticker {
+    background: #000000 !important;
+    color: #FFFFFF !important;
+    font-size: 11pt !important;
+    padding: 2px 10px !important;
+    margin: 0 !important;
+  }
+
+  .post-caption-box {
+    padding: 4px 0 0 !important;
+  }
+
+  .post-caption-text {
     font-size: 8.5pt !important;
-    color: #4A5568 !important;
     line-height: 1.3 !important;
-    margin-bottom: 6px !important;
+    color: #2D3748 !important;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  .role-student-box {
-    background: #F7FAFC !important;
-    border: 1.5px solid #4A5568 !important;
-    border-radius: 6px !important;
-    padding: 5px 8px !important;
-    margin-top: 4px !important;
-  }
-
-  .student-label {
-    font-size: 8pt !important;
-    color: #4A5568 !important;
-  }
-
-  .student-name {
-    font-size: 13pt !important;
-    font-weight: 800 !important;
-    color: #000000 !important;
-    letter-spacing: 0.1em !important;
-  }
-
-  /* 인쇄용 하단 안내 */
   .print-only-footer {
     display: block !important;
     margin-top: 10px;
