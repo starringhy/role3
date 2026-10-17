@@ -1,799 +1,576 @@
 /* ==========================================================================
-   우리 반 1인 1역할 배정기 (Classgram) - style.css
-   모던하고 깔끔한 인스타그램(Instagram) 감성의 피드 & 스토리 디자인
-   교실 게시판 부착용 A4 인쇄(@media print) 완벽 지원
+   우리 반 1인 1역할 배정 시스템 - style.css (Apple Pink Edition)
+   애플 쿠퍼티노 미니멀리즘 디자인, 프로스티드 글래스, 벤토 그리드, A4 인쇄
+   주 테마 컬러: Apple Signature Pink (#FF2D55)
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
-
+/* 1. 디자인 시스템 토큰 (Apple Pink Palette) */
 :root {
-  /* 인스타그램 시그니처 색상 & 모던 뉴트럴 */
-  --ig-bg: #FAFAFA;
-  --ig-card-bg: #FFFFFF;
-  --ig-border: #DBDBDB;
-  --ig-border-light: #EFEFEF;
-  --ig-text-main: #262626;
-  --ig-text-secondary: #737373;
-  --ig-text-light: #8E8E8E;
-  --ig-link: #0095F6;
-  --ig-link-hover: #1877F2;
+  --font-sf: 'Pretendard', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  --font-inter: 'Inter', -apple-system, sans-serif;
 
-  /* 인스타그램 시그니처 스토리 그라디언트 */
-  --ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  --ig-gradient-soft: linear-gradient(135deg, #FF7A00 0%, #FF0169 50%, #D300C5 100%);
-  --ig-gradient-warm: linear-gradient(135deg, #FFF0F5 0%, #FFF5EB 100%);
+  /* Apple Pink Palette */
+  --apple-pink: #FF2D55;
+  --apple-pink-hover: #E61E45;
+  --apple-pink-active: #CC1238;
+  --apple-pink-tint: #FFF0F4;
+  --apple-pink-tint-hover: #FFE2EB;
+  --apple-pink-border: #FFCCD8;
+  --apple-pink-glow: rgba(255, 45, 85, 0.28);
 
-  /* 파스텔 틴트 (포스트 비주얼 영역) */
-  --post-bg-sky: linear-gradient(180deg, #EBF5FF 0%, #F5F9FF 100%);
-  --post-bg-pink: linear-gradient(180deg, #FFF0F6 0%, #FFF8FA 100%);
-  --post-bg-yellow: linear-gradient(180deg, #FFFBEB 0%, #FFFDF5 100%);
-  --post-bg-mint: linear-gradient(180deg, #ECFDF5 0%, #F6FEF9 100%);
-  --post-bg-purple: linear-gradient(180deg, #F5F3FF 0%, #FAF8FF 100%);
-  --post-bg-orange: linear-gradient(180deg, #FFF7ED 0%, #FFFCF8 100%);
+  /* Canvas & Text */
+  --apple-canvas: #FFF6F8;
+  --apple-card: #FFFFFF;
+  --apple-text-primary: #1D1D1F;
+  --apple-text-secondary: #86868B;
+  --apple-text-tertiary: #A1A1A6;
+  --apple-border: rgba(255, 45, 85, 0.12);
+  --apple-border-subtle: rgba(0, 0, 0, 0.05);
+  --apple-hairline: #F4DFE5;
 
-  --radius-story: 50%;
-  --radius-card: 16px;
-  --radius-sm: 8px;
+  /* Auxiliary Tints */
+  --apple-green: #34C759;
+  --apple-green-tint: #EDFAF0;
+  --apple-orange: #FF9500;
+  --apple-purple: #AF52DE;
 
-  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  /* Frosted Glass */
+  --apple-glass-bg: rgba(255, 255, 255, 0.88);
+  --apple-glass-border: rgba(255, 255, 255, 0.7);
+
+  /* Shadows */
+  --apple-shadow-sm: 0 2px 8px rgba(255, 45, 85, 0.04);
+  --apple-shadow-card: 0 4px 20px rgba(180, 50, 80, 0.06);
+  --apple-shadow-hover: 0 14px 34px rgba(255, 45, 85, 0.14);
+  --apple-shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.18);
+  --apple-shadow-button: 0 4px 16px rgba(255, 45, 85, 0.35);
+
+  /* Radii */
+  --radius-pill: 980px;
+  --radius-card: 20px;
+  --radius-bento: 24px;
+  --radius-modal: 22px;
 }
 
-/* 기본 리셋 */
+/* 2. 글로벌 리셋 */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 'Noto Sans KR', Helvetica, Arial, sans-serif;
-  background-color: var(--ig-bg);
-  color: var(--ig-text-main);
+body.apple-theme {
+  font-family: var(--font-sf);
+  background-color: var(--apple-canvas);
+  color: var(--apple-text-primary);
   line-height: 1.5;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* 인스타그램 로고용 폰트 */
-.font-logo {
-  font-family: 'Grand Hotel', cursive;
-  letter-spacing: 0.01em;
-}
-
-/* 메인 래퍼 */
 .app-container {
-  max-width: 1080px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 16px 16px 80px;
-  width: 100%;
-  flex: 1;
+  padding: 0 20px 80px;
 }
 
-/* ==========================================================================
-   인스타그램 스타일 상단 네비게이션 헤더
-   ========================================================================== */
-.ig-navbar {
+/* 3. Apple 글로벌 네비게이션 바 (Frosted Glass) */
+.apple-nav-wrapper {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--ig-border);
+  background-color: var(--apple-glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--apple-border);
+}
+
+.apple-nav-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
 }
 
-.ig-navbar-inner {
-  max-width: 1080px;
-  height: 60px;
-  margin: 0 auto;
+.apple-nav-brand {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 7px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--apple-text-primary);
+  user-select: none;
 }
 
-/* 로고 영역 */
-.ig-brand {
+.apple-logo {
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--apple-pink);
+}
+
+.brand-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  background-color: var(--apple-pink-tint);
+  color: var(--apple-pink);
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid var(--apple-pink-border);
+  letter-spacing: 0.02em;
+}
+
+.apple-nav-actions {
   display: flex;
   align-items: center;
   gap: 10px;
-  text-decoration: none;
-  color: var(--ig-text-main);
 }
 
-.ig-logo-text {
-  font-size: 2.1rem;
-  line-height: 1;
-  font-weight: 400;
-  color: var(--ig-text-main);
-  background: var(--ig-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  padding-top: 4px;
+.apple-nav-link {
+  background: transparent;
+  border: none;
+  font-family: var(--font-sf);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--apple-text-secondary);
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
 }
 
-.ig-class-tag {
-  font-size: 0.8rem;
+.apple-nav-link:hover {
+  color: var(--apple-pink);
+  background-color: var(--apple-pink-tint);
+}
+
+/* 4. Apple 필(Pill) 버튼 시스템 */
+.apple-btn-pill {
+  font-family: var(--font-sf);
+  font-size: 0.88rem;
   font-weight: 600;
-  color: var(--ig-text-secondary);
-  background: #F0F2F5;
-  padding: 3px 8px;
-  border-radius: 6px;
+  letter-spacing: -0.01em;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
   border: 1px solid transparent;
   cursor: pointer;
-  outline: none;
-  max-width: 180px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: all 0.2s;
-}
-
-.ig-class-tag:hover,
-.ig-class-tag:focus {
-  background: #FFFFFF;
-  border-color: var(--ig-border);
-}
-
-/* 헤더 검색창 */
-.ig-search-box {
-  display: flex;
-  align-items: center;
-  background: #EFEFEF;
-  border-radius: 8px;
-  padding: 6px 14px;
-  width: 240px;
-  gap: 8px;
-  transition: background 0.2s;
-}
-
-.ig-search-box:focus-within {
-  background: #FFFFFF;
-  box-shadow: 0 0 0 1px #8E8E8E;
-}
-
-.ig-search-box input {
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 0.88rem;
-  width: 100%;
-  color: var(--ig-text-main);
-}
-
-.ig-search-box input::placeholder {
-  color: var(--ig-text-light);
-}
-
-/* 헤더 버튼 그룹 */
-.ig-nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn-ig-text {
-  background: transparent;
-  border: 1px solid var(--ig-border);
-  padding: 7px 12px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--ig-text-main);
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-}
-
-.btn-ig-text:hover {
-  background: #F7F7F7;
-  border-color: #BDBDBD;
-}
-
-/* 인스타그램 그라디언트 배정 버튼 */
-.btn-ig-primary {
-  background: var(--ig-gradient);
-  color: #FFFFFF;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 7px;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 3px 10px rgba(220, 39, 67, 0.25);
   white-space: nowrap;
+  outline: none;
 }
 
-.btn-ig-primary:hover {
-  transform: translateY(-1.5px);
-  box-shadow: 0 6px 16px rgba(220, 39, 67, 0.35);
-  filter: brightness(1.05);
+.apple-btn-pill:hover {
+  transform: scale(1.02);
 }
 
-.btn-ig-primary:active {
-  transform: translateY(0);
+.apple-btn-pill:active {
+  transform: scale(0.98);
 }
 
-/* ==========================================================================
-   인스타그램 스토리 섹션 (상단 학생 아바타 링 목록)
-   ========================================================================== */
-.stories-tray {
-  background: var(--ig-card-bg);
-  border: 1px solid var(--ig-border);
-  border-radius: var(--radius-card);
-  padding: 16px 20px;
-  margin: 20px 0 24px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  box-shadow: var(--shadow-subtle);
+/* 메인 핑크 프라이머리 버튼 */
+.apple-btn-primary {
+  background-color: var(--apple-pink);
+  color: #FFFFFF;
+  box-shadow: var(--apple-shadow-button);
 }
 
-.stories-tray::-webkit-scrollbar {
-  height: 4px;
-}
-.stories-tray::-webkit-scrollbar-thumb {
-  background: #DBDBDB;
-  border-radius: 4px;
+.apple-btn-primary:hover {
+  background-color: var(--apple-pink-hover);
+  box-shadow: 0 6px 20px rgba(255, 45, 85, 0.45);
 }
 
-.story-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  flex-shrink: 0;
-  width: 68px;
+.apple-btn-secondary {
+  background-color: var(--apple-pink-tint);
+  color: var(--apple-pink);
+  border: 1px solid var(--apple-pink-border);
+}
+
+.apple-btn-secondary:hover {
+  background-color: var(--apple-pink-tint-hover);
+}
+
+.apple-btn-outline {
+  background-color: transparent;
+  color: var(--apple-pink);
+  border-color: var(--apple-pink);
+}
+
+.apple-btn-outline:hover {
+  background-color: var(--apple-pink-tint);
+}
+
+.apple-btn-ghost {
+  background-color: transparent;
+  color: var(--apple-text-secondary);
+  border: 1px solid var(--apple-hairline);
+}
+
+.apple-btn-ghost:hover {
+  color: var(--apple-text-primary);
+  background-color: #FFFFFF;
+  border-color: #D1D1D6;
+}
+
+.apple-btn-danger {
+  background-color: #FFF0F0;
+  color: #FF3B30;
+  border: 1px solid #FFCCD0;
+}
+
+.apple-btn-danger:hover {
+  background-color: #FFE5E5;
+}
+
+/* 5. Apple 키노트 스타일 히어로 섹션 */
+.apple-hero-section {
   text-align: center;
-  transition: transform 0.15s ease;
-}
-
-.story-item:hover {
-  transform: scale(1.04);
-}
-
-/* 스토리 무지개 그라디언트 링 테두리 */
-.story-ring {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  padding: 2.5px;
-  background: var(--ig-gradient);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(220, 39, 67, 0.2);
-}
-
-.story-ring.unassigned {
-  background: #E5E7EB;
-  box-shadow: none;
-}
-
-.story-avatar {
-  width: 100%;
-  height: 100%;
-  background: #FFFFFF;
-  border-radius: 50%;
-  padding: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.35rem;
-  border: 2px solid #FFFFFF;
-  user-select: none;
-}
-
-.story-name {
-  font-size: 0.76rem;
-  color: var(--ig-text-main);
-  font-weight: 500;
-  max-width: 64px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* ==========================================================================
-   학급 프로필 헤더 (Bio & Stats 바)
-   ========================================================================== */
-.ig-profile-strip {
-  background: var(--ig-card-bg);
-  border: 1px solid var(--ig-border);
-  border-radius: var(--radius-card);
-  padding: 22px 28px;
+  padding: 44px 20px 32px;
   margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-  box-shadow: var(--shadow-subtle);
 }
 
-.ig-profile-info {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.ig-profile-avatar {
-  width: 66px;
-  height: 66px;
-  border-radius: 50%;
-  padding: 3px;
-  background: var(--ig-gradient);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.ig-profile-avatar-inner {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  border: 2px solid #FFFFFF;
-}
-
-.ig-bio-texts h2 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--ig-text-main);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.verified-badge {
-  color: #0095F6;
-  font-size: 1rem;
-}
-
-.ig-bio-caption {
-  font-size: 0.88rem;
-  color: var(--ig-text-secondary);
-  margin-top: 3px;
-}
-
-/* 팔로워 / 통계 수치 */
-.ig-stats-row {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.ig-stat-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.ig-stat-val {
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--ig-text-main);
-}
-
-.ig-stat-lbl {
-  font-size: 0.78rem;
-  color: var(--ig-text-secondary);
-}
-
-/* ==========================================================================
-   관리 패널 (학생/역할 편집기)
-   ========================================================================== */
-.management-panel {
-  display: none;
-  background: #FFFFFF;
-  border: 1px solid var(--ig-border);
-  border-radius: var(--radius-card);
-  padding: 24px;
-  margin-bottom: 24px;
-  box-shadow: var(--shadow-subtle);
-  animation: slideDown 0.25s ease-out;
-}
-
-.management-panel.active {
-  display: block;
-}
-
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 18px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--ig-border-light);
-}
-
-.panel-title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--ig-text-main);
-}
-
-.panel-body-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: 20px;
-}
-
-@media (max-width: 860px) {
-  .panel-body-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.list-edit-box {
-  background: #FAFAFA;
-  border: 1px solid var(--ig-border);
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.list-edit-box h4 {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--ig-text-main);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.list-scroll-area {
-  max-height: 260px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.edit-item-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #FFFFFF;
-  padding: 7px 10px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--ig-border-light);
-}
-
-.edit-item-row input {
-  border: none;
-  outline: none;
-  font-size: 0.88rem;
-  background: transparent;
-  width: 100%;
-}
-
-.btn-remove-item {
-  background: transparent;
-  border: none;
-  color: var(--ig-text-light);
-  cursor: pointer;
-  padding: 2px 6px;
-  font-size: 1rem;
-  border-radius: 4px;
-}
-
-.btn-remove-item:hover {
-  color: #ED4956;
-}
-
-.add-input-bar {
-  display: flex;
-  gap: 8px;
-}
-
-.add-input-bar input {
-  flex: 1;
-  padding: 8px 12px;
-  border: 1px solid var(--ig-border);
-  border-radius: var(--radius-sm);
-  font-size: 0.88rem;
-  outline: none;
-}
-
-.add-input-bar input:focus {
-  border-color: #8E8E8E;
-}
-
-.btn-add-item {
-  padding: 8px 14px;
-  font-size: 0.85rem;
-  background: #0095F6;
-  color: #FFFFFF;
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.btn-add-item:hover {
-  background: #1877F2;
-}
-
-/* ==========================================================================
-   인스타그램 피드 포스트 그리드 (메인 역할 카드)
-   ========================================================================== */
-.cards-grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 22px;
-}
-
-@media (min-width: 1024px) {
-  .cards-grid-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* 개별 인스타그램 포스트 카드 */
-.role-card {
-  background: var(--ig-card-bg);
-  border: 1px solid var(--ig-border);
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  box-shadow: var(--shadow-subtle);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-}
-
-.role-card:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-3px);
-}
-
-/* 1. 포스트 상단 헤더 (프로필 정보) */
-.post-header {
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--ig-border-light);
-}
-
-.post-user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.post-avatar-ring {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  padding: 2px;
-  background: var(--ig-gradient);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.post-avatar-inner {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.15rem;
-  border: 1.5px solid #FFFFFF;
-}
-
-.post-user-names {
-  display: flex;
-  flex-direction: column;
-}
-
-.post-handle {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--ig-text-main);
-  line-height: 1.2;
-}
-
-.post-location {
-  font-size: 0.75rem;
-  color: var(--ig-text-secondary);
-}
-
-.btn-post-more {
-  background: transparent;
-  border: none;
-  font-size: 1.1rem;
-  color: var(--ig-text-secondary);
-  cursor: pointer;
-  padding: 4px;
-  line-height: 1;
-}
-
-.btn-post-more:hover {
-  color: var(--ig-text-main);
-}
-
-/* 2. 포스트 메인 비주얼 영역 (사진 느낌) */
-.post-visual-area {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  background: var(--post-bg-sky);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-  overflow: hidden;
-  transition: filter 0.2s ease;
-}
-
-.post-big-icon {
-  font-size: 3.8rem;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));
-  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.role-card:hover .post-big-icon {
-  transform: scale(1.1) rotate(4deg);
-}
-
-/* 인스타그램 태그 스티커 형태의 담당 학생 배지 */
-.post-tag-sticker {
-  margin-top: 10px;
-  background: rgba(38, 38, 38, 0.82);
-  backdrop-filter: blur(6px);
-  color: #FFFFFF;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
+.apple-kicker {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.post-tag-sticker:hover {
-  background: rgba(0, 149, 246, 0.95);
-  transform: scale(1.03);
-}
-
-.post-tag-sticker.unassigned {
-  background: rgba(142, 142, 142, 0.75);
-  font-weight: 500;
-}
-
-/* 3. 포스트 하단 인터랙션 아이콘 바 */
-.post-actions-bar {
-  padding: 10px 14px 6px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.post-actions-left {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.btn-icon-action {
-  background: transparent;
-  border: none;
-  font-size: 1.3rem;
-  color: var(--ig-text-main);
-  cursor: pointer;
-  line-height: 1;
-  padding: 2px;
-  transition: transform 0.15s ease;
-}
-
-.btn-icon-action:hover {
-  transform: scale(1.15);
-}
-
-.btn-icon-action.liked {
-  color: #ED4956;
-}
-
-/* 4. 포스트 캡션 및 댓글 영역 */
-.post-caption-box {
-  padding: 0 14px 14px;
-  font-size: 0.88rem;
-  color: var(--ig-text-main);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.post-likes-count {
-  font-weight: 700;
   font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--apple-pink);
+  background-color: var(--apple-pink-tint);
+  border: 1px solid var(--apple-pink-border);
+  padding: 5px 16px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 16px;
+  box-shadow: 0 2px 10px rgba(255, 45, 85, 0.1);
 }
 
-.post-caption-text {
-  line-height: 1.45;
+.apple-hero-headline {
+  font-size: clamp(2.4rem, 5.2vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  color: var(--apple-text-primary);
+  margin-bottom: 14px;
+}
+
+.apple-hero-subhead {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-weight: 400;
+  color: var(--apple-text-secondary);
+  letter-spacing: -0.015em;
+  line-height: 1.55;
+  max-width: 660px;
+  margin: 0 auto 28px;
   word-break: keep-all;
 }
 
-.post-author-name {
-  font-weight: 700;
-  margin-right: 6px;
+/* 애플 스타일 캡슐 인라인 설정 바 */
+.apple-inline-bar {
+  display: inline-flex;
+  align-items: center;
+  background-color: #FFFFFF;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--apple-pink-border);
+  box-shadow: var(--apple-shadow-card);
+  gap: 12px;
 }
 
-.post-hashtags {
-  color: #00376B;
+.bar-segment {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.segment-label {
   font-size: 0.8rem;
-  margin-top: 2px;
+  font-weight: 700;
+  color: var(--apple-pink);
+  letter-spacing: -0.01em;
 }
 
-.post-time-stamp {
+.apple-input-inline {
+  border: none;
+  background: transparent;
+  font-family: var(--font-sf);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--apple-text-primary);
+  outline: none;
+  width: 120px;
+  text-align: center;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background-color 0.15s;
+}
+
+.apple-input-inline:focus {
+  background-color: var(--apple-pink-tint);
+}
+
+.segment-divider {
+  width: 1px;
+  height: 16px;
+  background-color: var(--apple-hairline);
+}
+
+/* 6. 애플 메인 액션 컨트롤 & 스펙 통계 바 */
+.apple-action-deck {
+  margin-bottom: 36px;
+}
+
+.apple-deck-card {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-bento);
+  border: 1px solid var(--apple-border);
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--apple-shadow-card);
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.action-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.apple-specs-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.spec-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
+}
+
+.spec-value {
+  font-family: var(--font-sf);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--apple-text-primary);
+}
+
+.spec-value.highlight {
+  color: var(--apple-pink);
+}
+
+.spec-caption {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--apple-text-secondary);
+}
+
+.spec-separator {
+  width: 1px;
+  height: 28px;
+  background-color: var(--apple-hairline);
+}
+
+/* 7. 애플 벤토(Bento) 카드 그리드 */
+.grid-container-wrapper {
+  margin-bottom: 40px;
+}
+
+.apple-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 20px;
+}
+
+@media (min-width: 1024px) {
+  .apple-bento-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 개별 애플 벤토 카드 */
+.role-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--apple-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--apple-shadow-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 230px;
+  position: relative;
+}
+
+.role-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--apple-shadow-hover);
+  border-color: var(--apple-pink-border);
+}
+
+/* 카드 상단 바 */
+.card-header-bar {
+  padding: 14px 18px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-student-number {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--apple-pink);
+  background-color: var(--apple-pink-tint);
+  border: 1px solid var(--apple-pink-border);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.card-role-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #FFF0F4 0%, #FFE2EC 100%);
+  border: 1px solid var(--apple-pink-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.45rem;
+  box-shadow: var(--apple-shadow-sm);
+  transition: transform 0.2s ease;
+}
+
+.role-card:hover .card-role-badge {
+  transform: scale(1.08) rotate(3deg);
+}
+
+/* 카드 본문 */
+.card-body-content {
+  padding: 4px 18px 14px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-role-name {
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--apple-text-primary);
+  margin-bottom: 6px;
+}
+
+.card-role-desc {
+  font-size: 0.85rem;
+  color: var(--apple-text-secondary);
+  line-height: 1.45;
+  margin-bottom: 14px;
+  word-break: keep-all;
+  flex: 1;
+}
+
+/* 학생 배정 블록 */
+.card-assigned-block {
+  background-color: var(--apple-canvas);
+  border: 1px solid var(--apple-hairline);
+  border-radius: 12px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.role-card:hover .card-assigned-block {
+  background-color: var(--apple-pink-tint);
+  border-color: var(--apple-pink-border);
+}
+
+.assigned-label {
   font-size: 0.72rem;
-  color: var(--ig-text-light);
-  margin-top: 2px;
-  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--apple-text-secondary);
 }
 
-/* 테마별 비주얼 배경 틴트 */
-.theme-sky .post-visual-area { background: var(--post-bg-sky); }
-.theme-pink .post-visual-area { background: var(--post-bg-pink); }
-.theme-yellow .post-visual-area { background: var(--post-bg-yellow); }
-.theme-mint .post-visual-area { background: var(--post-bg-mint); }
-.theme-purple .post-visual-area { background: var(--post-bg-purple); }
-.theme-orange .post-visual-area { background: var(--post-bg-orange); }
-
-/* 추첨 롤링 중 모션 */
-.rolling .post-visual-area {
-  animation: igVisualPulse 0.18s infinite alternate;
+.assigned-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--apple-text-primary);
+  letter-spacing: -0.01em;
 }
 
-@keyframes igVisualPulse {
-  0% { filter: brightness(1) contrast(1); }
-  100% { filter: brightness(1.08) contrast(1.05); }
+.assigned-name.empty {
+  color: var(--apple-text-tertiary);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+/* 카드 하단 액션 */
+.card-footer-actions {
+  padding: 8px 18px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: 1px solid var(--apple-border-subtle);
+}
+
+.btn-card-swap {
+  background: transparent;
+  border: none;
+  font-family: var(--font-sf);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--apple-pink);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.15s;
+}
+
+.btn-card-swap:hover {
+  background-color: var(--apple-pink-tint);
+}
+
+/* 롤링 애니메이션 */
+.rolling .card-assigned-block {
+  background-color: #FFF0F4 !important;
+  border-color: var(--apple-pink) !important;
+  animation: applePulse 0.18s infinite alternate;
+}
+
+@keyframes applePulse {
+  0% { transform: scale(0.98); }
+  100% { transform: scale(1.02); }
 }
 
 /* ==========================================================================
-   3, 2, 1 카운트다운 화면 (인스타그램 릴스/스토리 촬영 모드 감성)
+   3, 2, 1 카운트다운 화면 (Apple Keynote 모드 감성)
    ========================================================================== */
 .countdown-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.82);
-  backdrop-filter: blur(12px);
+  background: rgba(29, 29, 31, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   z-index: 5000;
   align-items: center;
   justify-content: center;
@@ -802,123 +579,86 @@ body {
 
 .countdown-overlay.active {
   display: flex;
-  animation: igFadeIn 0.25s ease-out;
+  animation: appleFadeIn 0.25s ease-out;
 }
 
-@keyframes igFadeIn {
+@keyframes appleFadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
 .countdown-modal-box {
   background: #FFFFFF;
-  border-radius: 28px;
-  padding: 40px 48px;
+  border-radius: 32px;
+  padding: 44px 56px;
   text-align: center;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--apple-shadow-modal);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 420px;
+  max-width: 440px;
   width: 90%;
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.countdown-story-ring {
+.countdown-kicker {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--apple-pink);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.countdown-circle {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  padding: 5px;
-  background: var(--ig-gradient);
+  background: var(--apple-pink-tint);
+  border: 3px solid var(--apple-pink);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 14px 0 20px;
-  box-shadow: 0 10px 30px rgba(220, 39, 67, 0.35);
-}
-
-.countdown-story-inner {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.countdown-subtext {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--ig-text-secondary);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  margin: 12px 0 18px;
+  box-shadow: 0 10px 30px var(--apple-pink-glow);
 }
 
 .countdown-number {
   font-size: 5rem;
   line-height: 1;
   font-weight: 800;
-  background: var(--ig-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--apple-pink);
   display: inline-block;
+  letter-spacing: -0.03em;
 }
 
 .countdown-number.pop {
-  animation: igNumberPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  animation: applePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
-@keyframes igNumberPop {
+@keyframes applePop {
   0% { transform: scale(0.4); opacity: 0; }
-  50% { transform: scale(1.2); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
 
 .countdown-cheer {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  color: var(--ig-text-main);
-  margin-top: 4px;
+  color: var(--apple-text-primary);
 }
 
 /* ==========================================================================
-   모달 팝업 & 알림 토스트 (인스타그램 모달 스타일)
+   애플 스타일 모달 팝업 & 세그먼트 탭
    ========================================================================== */
-.toast-notice {
-  position: fixed;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background: #262626;
-  color: #FFFFFF;
-  padding: 12px 24px;
-  border-radius: 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  font-size: 0.92rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  z-index: 9999;
-  opacity: 0;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-}
-
-.toast-notice.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-}
-
 .modal-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   z-index: 2000;
   align-items: center;
   justify-content: center;
@@ -929,138 +669,216 @@ body {
   display: flex;
 }
 
-.modal-card {
-  background: #FFFFFF;
-  border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+.modal-content.apple-sheet-modal {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-modal);
+  box-shadow: var(--apple-shadow-modal);
   width: 100%;
-  max-width: 520px;
+  max-width: 580px;
   max-height: 90vh;
   overflow-y: auto;
-  border: 1px solid var(--ig-border);
-  animation: igModalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--apple-border);
+  animation: modalScaleUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes igModalPop {
+@keyframes modalScaleUp {
   from { opacity: 0; transform: scale(0.96); }
   to { opacity: 1; transform: scale(1); }
 }
 
 .modal-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--ig-border-light);
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--apple-hairline);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.modal-header h3 {
-  font-size: 1.1rem;
+.modal-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-symbol {
+  font-size: 1.25rem;
+}
+
+.modal-title {
+  font-size: 1.15rem;
   font-weight: 700;
-  color: var(--ig-text-main);
+  letter-spacing: -0.015em;
+  color: var(--apple-text-primary);
 }
 
 .btn-modal-close {
   background: transparent;
   border: none;
-  font-size: 1.3rem;
-  color: var(--ig-text-light);
+  font-size: 1.5rem;
+  color: var(--apple-text-tertiary);
   cursor: pointer;
+  padding: 4px;
+  line-height: 1;
 }
 
 .btn-modal-close:hover {
-  color: var(--ig-text-main);
+  color: var(--apple-text-primary);
 }
 
-.modal-content {
-  padding: 22px;
+.modal-body {
+  padding: 24px;
 }
 
 .modal-footer {
-  padding: 14px 20px;
-  background: #FAFAFA;
-  border-top: 1px solid var(--ig-border-light);
+  padding: 16px 24px;
+  background-color: var(--apple-canvas);
+  border-top: 1px solid var(--apple-hairline);
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: var(--radius-modal);
+  border-bottom-right-radius: var(--radius-modal);
 }
 
+/* 세그먼트 컨트롤 탭 (Segmented Control) */
+.apple-segmented-tabs {
+  background-color: #F0F0F3;
+  padding: 3px;
+  border-radius: 10px;
+  display: flex;
+  gap: 2px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-family: var(--font-sf);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--apple-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tab-btn.active {
+  background-color: #FFFFFF;
+  color: var(--apple-pink);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* 폼 스타일 */
 .form-group {
   margin-bottom: 16px;
 }
 
-.form-group label {
+.form-label {
   display: block;
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--ig-text-main);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--apple-text-primary);
   margin-bottom: 6px;
 }
 
-.form-input-text,
-.form-textarea {
+.form-input,
+.form-textarea,
+.apple-select {
   width: 100%;
   padding: 10px 14px;
-  border: 1px solid var(--ig-border);
-  border-radius: 8px;
+  border: 1px solid var(--apple-hairline);
+  border-radius: 10px;
+  font-family: var(--font-sf);
   font-size: 0.92rem;
   outline: none;
-  font-family: inherit;
-  transition: border-color 0.2s;
+  background-color: #FFFFFF;
+  color: var(--apple-text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.form-input-text:focus,
-.form-textarea:focus {
-  border-color: #0095F6;
+.form-input:focus,
+.form-textarea:focus,
+.apple-select:focus {
+  border-color: var(--apple-pink);
+  box-shadow: 0 0 0 3px rgba(255, 45, 85, 0.18);
 }
 
-.info-note-box {
-  background: #F0F9FF;
-  border: 1px solid #BAE6FD;
-  border-radius: 8px;
-  padding: 12px 14px;
+.form-help {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--apple-text-secondary);
+  margin-top: 5px;
+}
+
+.modal-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.apple-callout-box {
+  background-color: var(--apple-pink-tint);
+  border: 1px solid var(--apple-pink-border);
+  border-radius: 12px;
+  padding: 12px 16px;
   font-size: 0.85rem;
-  color: #0369A1;
-  margin-bottom: 16px;
+  color: #922240;
+  line-height: 1.5;
+  margin-top: 16px;
 }
 
-.code-snippet {
-  background: #262626;
-  color: #F5F5F5;
-  padding: 12px;
-  border-radius: 8px;
+.code-snippet-box {
+  background-color: #1D1D1F;
+  color: #F5F5F7;
+  padding: 14px;
+  border-radius: 10px;
   font-family: monospace;
   font-size: 0.8rem;
   overflow-x: auto;
   white-space: pre-wrap;
-  max-height: 150px;
-  margin-top: 8px;
+  max-height: 160px;
 }
 
-/* 하단 푸터 */
-.app-footer {
-  text-align: center;
-  padding: 24px;
-  font-size: 0.8rem;
-  color: var(--ig-text-light);
-  border-top: 1px solid var(--ig-border);
-  background: #FFFFFF;
+/* 8. 햅틱 플로팅 알림 토스트 */
+.toast-notice {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background-color: rgba(29, 29, 31, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #FFFFFF;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  font-size: 0.9rem;
+  font-weight: 500;
+  z-index: 9999;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  white-space: nowrap;
 }
 
-/* ==========================================================================
-   인쇄 전용 배너 (화면에서는 숨김, 인쇄 시에만 보임)
-   ========================================================================== */
-.print-only-header {
-  display: none;
+.toast-notice.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
 }
 
 /* ==========================================================================
    교실 게시판 부착용 A4 인쇄 스타일 (@media print)
-   정갈하고 깔끔한 A4 3열 x 4행 게시판 인쇄물로 최적화
    ========================================================================== */
+.print-only-header,
+.print-only-footer {
+  display: none;
+}
+
 @media print {
   @page {
     size: A4 portrait;
@@ -1073,12 +891,22 @@ body {
     color-adjust: exact !important;
   }
 
-  body {
-    background: #FFFFFF !important;
-    font-size: 11pt !important;
+  body.apple-theme {
+    background-color: #FFFFFF !important;
     color: #000000 !important;
+    font-size: 11pt !important;
     padding: 0 !important;
     margin: 0 !important;
+  }
+
+  .apple-nav-wrapper,
+  .apple-hero-section,
+  .apple-action-deck,
+  .card-footer-actions,
+  .countdown-overlay,
+  .modal-overlay,
+  .toast-notice {
+    display: none !important;
   }
 
   .app-container {
@@ -1087,137 +915,131 @@ body {
     margin: 0 !important;
   }
 
-  /* 인쇄 시 불필요한 인스타그램 웹 UI 완전 숨김 */
-  .ig-navbar,
-  .stories-tray,
-  .ig-profile-strip,
-  .management-panel,
-  .post-actions-bar,
-  .post-likes-count,
-  .post-hashtags,
-  .post-time-stamp,
-  .btn-post-more,
-  .countdown-overlay,
-  .toast-notice,
-  .modal-overlay,
-  .app-footer {
-    display: none !important;
-  }
-
-  /* 인쇄 전용 게시판 헤더 출력 */
+  /* 인쇄 전용 헤더 */
   .print-only-header {
     display: block !important;
     text-align: center;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #262626;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
   }
 
-  .print-title {
-    font-size: 20pt !important;
-    font-weight: 800 !important;
-    color: #000000 !important;
-    margin-bottom: 4px !important;
+  .print-top-line {
+    height: 3px;
+    background-color: #000000;
+    margin-bottom: 8px;
   }
 
-  .print-meta-row {
+  .print-header-title {
+    font-size: 21pt;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    color: #000000;
+  }
+
+  .print-header-meta {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 10pt;
-    color: #4A5568;
-    margin-top: 4px;
+    font-weight: 600;
+    color: #333333;
+    padding: 0 4px;
   }
 
-  /* A4 3x4 그리드 정렬 */
-  .cards-grid-container {
+  .print-motto {
+    font-style: italic;
+    color: #555555;
+  }
+
+  /* 인쇄용 카드 그리드: 3열 균등 배치 (12개 카드가 A4 1장에 꼭 맞음) */
+  .apple-bento-grid {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 8px !important;
-    page-break-inside: avoid;
+    gap: 10px !important;
   }
 
   .role-card {
-    border: 1.5px solid #262626 !important;
-    border-radius: 8px !important;
+    border: 1.5px solid #222222 !important;
     box-shadow: none !important;
+    border-radius: 8px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
     transform: none !important;
-    background: #FFFFFF !important;
-    break-inside: avoid;
+    background-color: #FFFFFF !important;
+    padding: 8px 10px !important;
     min-height: 125px !important;
     max-height: 135px !important;
-    padding: 8px 10px !important;
   }
 
-  .post-header {
-    padding: 0 0 4px !important;
-    border-bottom: 1px solid #DBDBDB !important;
+  .card-header-bar {
+    padding: 0 0 6px !important;
+    border-bottom: 1px solid #DDDDDD !important;
   }
 
-  .post-avatar-ring {
-    width: 24px !important;
-    height: 24px !important;
-    padding: 1px !important;
-    background: #262626 !important;
-  }
-
-  .post-avatar-inner {
-    font-size: 13px !important;
-  }
-
-  .post-handle {
-    font-size: 10.5pt !important;
-    font-weight: 800 !important;
+  .card-student-number {
+    font-size: 8.5pt !important;
+    border: 1px solid #555555 !important;
+    background-color: #FFFFFF !important;
     color: #000000 !important;
   }
 
-  .post-location {
-    display: none !important;
+  .card-role-badge {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 16px !important;
+    border: 1px solid #CCCCCC !important;
   }
 
-  .post-visual-area {
-    height: 38px !important;
-    background: #F7FAFC !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    padding: 0 10px !important;
-    margin: 4px 0 !important;
-    border-radius: 4px !important;
-    border: 1px solid #E2E8F0 !important;
+  .card-body-content {
+    padding: 6px 0 0 !important;
   }
 
-  .post-big-icon {
-    font-size: 20px !important;
+  .card-role-name {
+    font-size: 12pt !important;
+    font-weight: 800 !important;
+    color: #000000 !important;
+    margin-bottom: 2px !important;
   }
 
-  .post-tag-sticker {
-    background: #000000 !important;
-    color: #FFFFFF !important;
-    font-size: 11pt !important;
-    padding: 2px 10px !important;
-    margin: 0 !important;
-  }
-
-  .post-caption-box {
-    padding: 4px 0 0 !important;
-  }
-
-  .post-caption-text {
+  .card-role-desc {
     font-size: 8.5pt !important;
     line-height: 1.3 !important;
-    color: #2D3748 !important;
+    color: #444444 !important;
+    margin-bottom: 6px !important;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
+  .card-assigned-block {
+    background-color: #F8F8F8 !important;
+    border: 1.5px solid #333333 !important;
+    padding: 4px 8px !important;
+    border-radius: 6px !important;
+  }
+
+  .assigned-label {
+    font-size: 7.5pt !important;
+    color: #555555 !important;
+  }
+
+  .assigned-name {
+    font-size: 12pt !important;
+    font-weight: 800 !important;
+    color: #000000 !important;
+    letter-spacing: 0.08em !important;
+  }
+
   .print-only-footer {
     display: block !important;
-    margin-top: 10px;
+    margin-top: 12px;
     padding-top: 6px;
-    border-top: 1px dashed #718096;
+    border-top: 1px dashed #777777;
     text-align: center;
     font-size: 8.5pt;
-    color: #4A5568;
+    color: #555555;
   }
 }
