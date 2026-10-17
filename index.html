@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>우리 반 1인 1역할 배정기</title>
+  <meta name="description" content="초등학교 교실을 위한 귀엽고 산뜻한 1인 1역할 자동 배정 및 A4 인쇄 웹 애플리케이션" />
+  <meta property="og:title" content="우리 반 1인 1역할 배정기" />
+  <meta property="og:description" content="초등학교 교실을 위한 귀엽고 산뜻한 1인 1역할 자동 배정 및 A4 인쇄 웹 애플리케이션" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  
+  <!-- 스타일시트 링크 -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- =====================================================================
+       인쇄 전용 헤더 (A4 교실 게시판 부착용 - 화면에서는 숨겨짐)
+       ===================================================================== -->
+  <div class="print-only-header">
+    <h1 class="print-title" id="printClassTitle">우리 반 (3학년 2반) 1인 1역할 배정표</h1>
+    <div class="print-meta-row">
+      <span id="printDate">배정일자: 2026년 3월 3일</span>
+      <span>⭐ 우리들의 다짐: 내 역할은 내가 책임지고 즐겁게 실천해요!</span>
+    </div>
+  </div>
+
+  <div class="app-container">
+    <!-- =====================================================================
+         상단 네비게이션 및 학급 명칭
+         ===================================================================== -->
+    <header class="main-header">
+      <div class="brand-section">
+        <div class="brand-icon">🏫</div>
+        <div class="title-box">
+          <div class="class-badge-wrapper">
+            <input 
+              type="text" 
+              id="classTitleInput" 
+              class="class-title-input" 
+              value="우리 반 (3학년 2반)" 
+              title="클릭하여 학급 이름을 수정하세요" 
+            />
+          </div>
+          <span class="app-subtitle">
+            <span>✨ 행복한 교실 1인 1역할 도우미</span>
+            <span>·</span>
+            <span id="lastAssignedDateText">아직 배정 전입니다.</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- 상단 액션 버튼 모음 (구글 시트 연동 버튼 자리 포함) -->
+      <div class="header-actions">
+        <button type="button" class="btn btn-sheet-load" id="btnSheetLoad" title="구글 스프레드시트 또는 명렬표 불러오기">
+          <span>🔄</span> 시트 불러오기
+        </button>
+        <button type="button" class="btn btn-sheet-save" id="btnSheetSave" title="구글 스프레드시트 또는 클립보드로 결과 저장">
+          <span>💾</span> 시트에 결과 저장
+        </button>
+        <button type="button" class="btn btn-print" id="btnPrint" title="교실 게시판 부착용 A4 인쇄">
+          <span>🖨️</span> A4 인쇄하기
+        </button>
+        <button type="button" class="btn btn-manage" id="btnToggleManage" title="학생 및 역할 목록 수정">
+          <span>⚙️</span> 학생/역할 편집
+        </button>
+      </div>
+    </header>
+
+    <!-- =====================================================================
+         히어로 배너 (배정 버튼 및 현황 스트립)
+         ===================================================================== -->
+    <section class="hero-banner">
+      <div class="hero-main-row">
+        <div class="hero-text-block">
+          <h2>🎲 우리 반 1인 1역할 배정</h2>
+          <p>버튼을 누르면 학생 12명과 역할 12개가 1:1로 신나고 공정하게 무작위 매칭됩니다.</p>
+        </div>
+        <button type="button" class="btn btn-primary-roll" id="btnRoll">
+          <span>🎲</span> 역할 배정하기
+        </button>
+      </div>
+
+      <!-- 인원 및 일치 상태 표시줄 -->
+      <div class="stats-counter-strip">
+        <span class="stat-chip">등록 학생: <strong id="statStudentCount">12명</strong></span>
+        <span class="stat-chip">등록 역할: <strong id="statRoleCount">12개</strong></span>
+        <span class="stat-match-indicator matched" id="statMatchStatus">✓ 인원-역할 1:1 완벽 일치</span>
+        <span class="hero-quick-tips">💡 각 카드의 [담당 학생] 상자를 누르면 수동으로 맞바꿀 수도 있어요.</span>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         학생 & 역할 목록 관리 패널 (접이식 편집기)
+         ===================================================================== -->
+    <section class="management-panel" id="managementPanel">
+      <div class="panel-header">
+        <h3 class="panel-title">✏️ 학생 명단 및 역할 목록 편집</h3>
+        <button type="button" class="btn btn-print" id="btnResetDefaults" style="font-size:0.85rem; padding:6px 12px;">
+          <span>↺</span> 기본 12명/12역할로 초기화
+        </button>
+      </div>
+
+      <div class="panel-body-grid">
+        <!-- 1. 학생 명단 관리 -->
+        <div class="list-edit-box">
+          <h4>
+            <span>학생 명단</span>
+            <span style="font-size:0.8rem; font-weight:normal; color:#718096;">이름을 클릭해 바로 수정</span>
+          </h4>
+          <div class="list-scroll-area" id="studentEditList"></div>
+          <div class="add-input-bar">
+            <input type="text" id="inputNewStudent" placeholder="새 학생 이름 (쉼표로 여러 명 추가 가능)" />
+            <button type="button" class="btn-add-item" id="btnAddStudent">+ 추가</button>
+          </div>
+        </div>
+
+        <!-- 2. 역할 목록 관리 -->
+        <div class="list-edit-box">
+          <h4>
+            <span>학급 역할 목록</span>
+            <span style="font-size:0.8rem; font-weight:normal; color:#718096;">아이콘 · 역할명 · 임무</span>
+          </h4>
+          <div class="list-scroll-area" id="roleEditList"></div>
+          <div class="add-input-bar" style="flex-wrap: wrap;">
+            <input type="text" id="inputNewRoleIcon" placeholder="아이콘" style="max-width: 60px;" value="⭐" />
+            <input type="text" id="inputNewRoleName" placeholder="역할 이름 (예: 우유 도우미)" style="flex: 1;" />
+            <input type="text" id="inputNewRoleDuty" placeholder="주요 임무 설명" style="flex: 2; min-width: 150px;" />
+            <button type="button" class="btn-add-item" id="btnAddRole">+ 추가</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         메인 역할 카드 그리드 (화면 및 A4 인쇄 대상)
+         ===================================================================== -->
+    <main class="cards-grid-container" id="cardsGrid">
+      <!-- script.js에 의해 12개의 카드가 렌더링됩니다 -->
+    </main>
+
+    <!-- 인쇄 전용 하단 안내 문구 -->
+    <div class="print-only-footer">
+      <span>배정 일자: <strong id="printFooterDate">2026년 1학기</strong> · 우리 반 모두가 힘을 합쳐 만들어가는 행복하고 깨끗한 교실!</span>
+    </div>
+  </div>
+
+  <!-- 푸터 -->
+  <footer class="app-footer">
+    <p>우리 반 1인 1역할 배정기 · HTML/CSS/JS 기반 정적 웹 앱 · GitHub Pages 호스팅 지원</p>
+  </footer>
+
+  <!-- =====================================================================
+       모달 1: [🔄 시트 불러오기]
+       ===================================================================== -->
+  <div class="modal-overlay" id="modalSheetLoad">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>🔄 구글 스프레드시트 불러오기</h3>
+        <button type="button" class="btn-modal-close" aria-label="닫기">&times;</button>
+      </div>
+      <div class="modal-content">
+        <!-- 1) Apps Script Web App 연동 방식 -->
+        <div class="form-group">
+          <label>Google Apps Script 웹 앱 URL</label>
+          <div style="display: flex; gap: 8px;">
+            <input 
+              type="url" 
+              class="form-input-text apps-script-url-input" 
+              placeholder="https://script.google.com/macros/s/.../exec" 
+            />
+            <button type="button" class="btn btn-sheet-load" id="btnSaveScriptUrl" style="padding: 8px 14px;">
+              저장
+            </button>
+          </div>
+          <span style="font-size: 0.8rem; color: #718096; margin-top: 4px; display: block;">
+            배포된 구글 스프레드시트 Apps Script Web App 주소를 입력하면 실시간으로 연동됩니다.
+          </span>
+        </div>
+
+        <button type="button" class="btn btn-sheet-load" id="btnFetchFromSheet" style="width: 100%; margin-bottom: 20px;">
+          <span>🌐</span> 구글 시트에서 데이터 가져오기
+        </button>
+
+        <div style="text-align: center; margin: 16px 0; color: #A0AEC0; font-size: 0.85rem; position: relative;">
+          <hr style="border: none; border-top: 1px dashed #E2E8F0; margin-bottom: -10px;" />
+          <span style="background: #FFFFFF; padding: 0 10px; position: relative;">또는 복사/붙여넣기로 간편 등록</span>
+        </div>
+
+        <!-- 2) 스프레드시트 복사 붙여넣기 방식 -->
+        <div class="form-group">
+          <label>학생 명단 붙여넣기 (스프레드시트 열 복사 후 Ctrl+V)</label>
+          <textarea 
+            id="pasteStudentArea" 
+            class="form-textarea" 
+            rows="3" 
+            placeholder="김민준&#10;이서연&#10;박도윤&#10;..."
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>역할 목록 붙여넣기 (역할명 [탭] 임무설명)</label>
+          <textarea 
+            id="pasteRoleArea" 
+            class="form-textarea" 
+            rows="3" 
+            placeholder="칠판 지킴이&#9;수업 후 칠판 지우기&#10;우유 도우미&#9;우유 상자 수령 및 분리배출"
+          ></textarea>
+        </div>
+
+        <button type="button" class="btn btn-manage" id="btnApplyPastedData" style="width: 100%;">
+          <span>📋</span> 붙여넣은 내용으로 일괄 등록하기
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-print btn-modal-cancel">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       모달 2: [💾 시트에 결과 저장]
+       ===================================================================== -->
+  <div class="modal-overlay" id="modalSheetSave">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>💾 구글 스프레드시트에 결과 저장</h3>
+        <button type="button" class="btn-modal-close" aria-label="닫기">&times;</button>
+      </div>
+      <div class="modal-content">
+        <div class="info-note-box">
+          ✨ 스프레드시트에 바로 붙여넣을 수 있도록 클립보드 복사, CSV 파일 다운로드, Apps Script 웹앱 전송 기능을 모두 지원합니다.
+        </div>
+
+        <!-- 1) 스프레드시트 붙여넣기 클립보드 복사 -->
+        <div style="margin-bottom: 16px;">
+          <label style="font-weight: 700; font-size: 0.9rem; color: #2D3748; display: block; margin-bottom: 6px;">
+            1. 간편 클립보드 복사 (추천)
+          </label>
+          <button type="button" class="btn btn-sheet-save" id="btnCopyForSheet" style="width: 100%;">
+            <span>📋</span> 스프레드시트용 표 복사하기 (시트에서 바로 Ctrl+V)
+          </button>
+          <span style="font-size: 0.8rem; color: #718096; margin-top: 4px; display: block;">
+            클릭 후 구글 시트 빈 셀을 클릭하고 Ctrl+V(붙여넣기)를 누르면 열과 행이 딱 맞게 붙여넣어집니다.
+          </span>
+        </div>
+
+        <!-- 2) CSV 파일 다운로드 -->
+        <div style="margin-bottom: 20px;">
+          <label style="font-weight: 700; font-size: 0.9rem; color: #2D3748; display: block; margin-bottom: 6px;">
+            2. CSV 파일 다운로드
+          </label>
+          <button type="button" class="btn btn-print" id="btnDownloadCsv" style="width: 100%;">
+            <span>📁</span> 엑셀/스프레드시트용 CSV 다운로드
+          </button>
+        </div>
+
+        <!-- 3) Apps Script POST 연동 -->
+        <div class="form-group" style="padding-top: 14px; border-top: 1px dashed #E2E8F0;">
+          <label>3. Google Apps Script Web App 자동 전송</label>
+          <input 
+            type="url" 
+            class="form-input-text apps-script-url-input" 
+            placeholder="https://script.google.com/macros/s/.../exec" 
+          />
+          <button type="button" class="btn btn-sheet-save" id="btnPostToSheet" style="width: 100%; margin-top: 8px;">
+            <span>🚀</span> 구글 시트에 직접 저장하기
+          </button>
+        </div>
+
+        <div style="margin-top: 14px;">
+          <button type="button" id="btnToggleGuide" style="background: none; border: none; color: #6B46C1; font-size: 0.85rem; cursor: pointer; text-decoration: underline;">
+            📖 Google Apps Script(GAS) 연동 코드 예시 보기
+          </button>
+          <div id="appsScriptGuideArea" style="display: none; margin-top: 10px;">
+            <p style="font-size: 0.8rem; color: #4A5568;">구글 스프레드시트 > 확장 프로그램 > Apps Script에 아래 코드를 붙여넣고 '웹 앱으로 배포'하시면 연동됩니다:</p>
+            <div class="code-snippet">function doGet(e) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("역할명단") || ss.getActiveSheet();
+  // 데이터 읽기 로직
+  return ContentService.createTextOutput(JSON.stringify({ students: [...], roles: [...] }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  var data = JSON.parse(e.postData.contents);
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  // 배정 결과 행 추가
+  return ContentService.createTextOutput(JSON.stringify({ status: "ok" }))
+    .setMimeType(ContentService.MimeType.JSON);
+}</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-print btn-modal-cancel">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       모달 3: 수동 담당 학생 교체 (스왑)
+       ===================================================================== -->
+  <div class="modal-overlay" id="modalSwap">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 id="swapRoleTitle">담당 학생 변경</h3>
+        <button type="button" class="btn-modal-close" aria-label="닫기">&times;</button>
+      </div>
+      <div class="modal-content">
+        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 14px;">
+          현재 담당: <strong id="swapCurrentStudentText" style="color: #2D3748;">-</strong>
+        </p>
+        <div class="form-group">
+          <label>새로 지정할 학생 선택</label>
+          <select id="swapStudentSelect" class="form-input-text" style="font-size: 1rem;">
+            <!-- script.js에서 동적 옵션 추가 -->
+          </select>
+          <span style="font-size: 0.8rem; color: #718096; margin-top: 6px; display: block;">
+            * 다른 역할을 맡고 있던 학생을 선택하면 두 학생의 역할이 자동으로 서로 맞바뀝니다!
+          </span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-print btn-modal-cancel">취소</button>
+        <button type="button" class="btn btn-primary-roll" id="btnConfirmSwap" style="font-size: 0.95rem; padding: 8px 18px;">
+          변경 완료
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 토스트 알림 메시지 -->
+  <div class="toast-notice" id="toastNotice">
+    🎉 역할 배정이 완료되었습니다!
+  </div>
+
+  <!-- 동작 스크립트 -->
+  <script src="./script.js"></script>
+</body>
+</html>
