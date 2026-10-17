@@ -248,9 +248,30 @@ function updatePrintHeader() {
 }
 
 // ==========================================
-// 7. [🎲 역할 배정하기] 무작위 매칭 로직 & 애니메이션
+// 7. [🎲 역할 배정하기] 3, 2, 1 카운트다운 및 무작위 매칭 로직
 // ==========================================
 let isRolling = false;
+
+// 맑은 비프음 효과음 (Web Audio API)
+function playBeep(freq = 520, duration = 0.2) {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + duration);
+  } catch (e) {
+    // 오디오 컨텍스트 정책 예외 무시
+  }
+}
 
 function handleRollAssignments() {
   if (isRolling) return;
@@ -268,6 +289,76 @@ function handleRollAssignments() {
   const rollBtn = document.getElementById("btnRoll");
   if (rollBtn) {
     rollBtn.disabled = true;
+    rollBtn.innerHTML = `<span>⏳</span> 카운트다운 중...`;
+  }
+
+  // 1) Fisher-Yates 셔플로 학생 명단 무작위 섞기 준비
+  const shuffledStudents = [...state.students];
+  for (let i = shuffledStudents.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledStudents[i], shuffledStudents[j]] = [shuffledStudents[j], shuffledStudents[i]];
+  }
+
+  // 2) 3, 2, 1 카운트다운 화면 중앙 표시
+  runCountdown(() => {
+    // 카운트다운 완료 후 카드 롤링 및 실제 배정 반영
+    startCardRollAndAssignment(shuffledStudents);
+  });
+}
+
+function runCountdown(callback) {
+  const overlay = document.getElementById("countdownOverlay");
+  const numberEl = document.getElementById("countdownNumber");
+  const subtextEl = document.getElementById("countdownSubtext");
+  const cheerEl = document.getElementById("countdownCheer");
+
+  if (!overlay || !numberEl) {
+    if (callback) callback();
+    return;
+  }
+
+  overlay.classList.add("active");
+
+  const steps = [
+    { count: "3", cheer: "두근두근! 모두 자리에 바르게 앉아요! 🎲", freq: 440 },
+    { count: "2", cheer: "과연 이번 달 나의 소중한 역할은? ✨", freq: 554 },
+    { count: "1", cheer: "숨을 죽이고 카드를 지켜보세요! 🌟", freq: 659 },
+    { count: "짠! 🎉", cheer: "우리 반 1인 1역할 배정 결과 발표! 🎈", freq: 880 }
+  ];
+
+  let stepIndex = 0;
+
+  function showStep() {
+    const current = steps[stepIndex];
+    if (subtextEl) subtextEl.textContent = "🎲 두근두근! 우리 반 역할 배정 중";
+    numberEl.textContent = current.count;
+    if (cheerEl) cheerEl.textContent = current.cheer;
+    
+    // 팝업 애니메이션 재시작
+    numberEl.classList.remove("pop");
+    void numberEl.offsetWidth; // DOM reflow
+    numberEl.classList.add("pop");
+
+    playBeep(current.freq, stepIndex === 3 ? 0.4 : 0.22);
+
+    stepIndex++;
+    if (stepIndex < steps.length) {
+      setTimeout(showStep, 950);
+    } else {
+      // "짠!" 보여준 후 오버레이 닫고 결과 연출
+      setTimeout(() => {
+        overlay.classList.remove("active");
+        if (callback) callback();
+      }, 750);
+    }
+  }
+
+  showStep();
+}
+
+function startCardRollAndAssignment(shuffledStudents) {
+  const rollBtn = document.getElementById("btnRoll");
+  if (rollBtn) {
     rollBtn.innerHTML = `<span>🎲</span> 신나게 섞는 중...`;
   }
 
@@ -275,16 +366,9 @@ function handleRollAssignments() {
   const cards = document.querySelectorAll(".role-card");
   cards.forEach(card => card.classList.add("rolling"));
 
-  // Fisher-Yates 셔플로 학생 명단 무작위 섞기
-  const shuffledStudents = [...state.students];
-  for (let i = shuffledStudents.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledStudents[i], shuffledStudents[j]] = [shuffledStudents[j], shuffledStudents[i]];
-  }
-
-  // 1초간 이름이 팽팽 돌면서 바뀌는 룰렛 애니메이션 효과
+  // 카드가 샤샤샥 섞이는 0.6초간의 경쾌한 룰렛 효과
   let rollTicks = 0;
-  const maxRollTicks = 12;
+  const maxRollTicks = 8;
   const intervalTime = 70;
 
   const rollInterval = setInterval(() => {

@@ -7,8 +7,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* 파스텔 테마 색상 */
-  --bg-main: #FBF9F5;
+  /* 파스텔 테마 색상 (연한 분홍색 테마) */
+  --bg-main: #FFF0F4;
   --bg-card: #FFFFFF;
   --text-main: #2D3748;
   --text-muted: #718096;
@@ -30,8 +30,8 @@
   --pastel-yellow-border: #FFE58F;
   --pastel-yellow-text: #8C6B00;
   
-  --pastel-pink-bg: #FFEBF1;
-  --pastel-pink-border: #FFB8CF;
+  --pastel-pink-bg: #FFE5EE;
+  --pastel-pink-border: #FFAEC5;
   --pastel-pink-text: #8C2448;
   
   --pastel-purple-bg: #F5EEFD;
@@ -42,15 +42,15 @@
   --pastel-orange-border: #FFC4A1;
   --pastel-orange-text: #943A08;
 
-  --border-subtle: #EBE5DC;
+  --border-subtle: #F3DEE5;
   --radius-lg: 20px;
   --radius-md: 14px;
   --radius-sm: 8px;
   
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 6px 16px rgba(110, 89, 70, 0.08);
-  --shadow-lg: 0 12px 28px rgba(110, 89, 70, 0.12);
-  --shadow-button: 0 4px 12px rgba(255, 112, 143, 0.35);
+  --shadow-sm: 0 2px 6px rgba(220, 120, 150, 0.06);
+  --shadow-md: 0 6px 18px rgba(215, 110, 140, 0.1);
+  --shadow-lg: 0 14px 32px rgba(215, 110, 140, 0.16);
+  --shadow-button: 0 4px 14px rgba(255, 112, 143, 0.4);
 }
 
 /* 기본 리셋 및 전역 설정 */
@@ -64,10 +64,10 @@ body {
   font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--bg-main);
   background-image: 
-    radial-gradient(#F0E9DF 1.2px, transparent 1.2px),
-    radial-gradient(#F0E9DF 1.2px, var(--bg-main) 1.2px);
-  background-size: 28px 28px;
-  background-position: 0 0, 14px 14px;
+    radial-gradient(#F7D5E0 1.2px, transparent 1.2px),
+    radial-gradient(#F7D5E0 1.2px, var(--bg-main) 1.2px);
+  background-size: 26px 26px;
+  background-position: 0 0, 13px 13px;
   color: var(--text-main);
   line-height: 1.5;
   min-height: 100vh;
@@ -922,6 +922,104 @@ body {
 }
 
 /* ==========================================================================
+   3, 2, 1 카운트다운 화면 오버레이
+   ========================================================================== */
+.countdown-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 20, 26, 0.65);
+  backdrop-filter: blur(8px);
+  z-index: 5000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.countdown-overlay.active {
+  display: flex;
+  animation: fadeInOverlay 0.25s ease-out;
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.countdown-modal-box {
+  background: #FFFFFF;
+  border-radius: 32px;
+  padding: 44px 56px;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(255, 112, 143, 0.35);
+  border: 4px solid #FFE5EE;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 440px;
+  width: 90%;
+  position: relative;
+  overflow: hidden;
+}
+
+.countdown-subtext {
+  font-family: 'Jua', 'Noto Sans KR', sans-serif;
+  font-size: 1.25rem;
+  color: var(--primary-coral);
+  margin-bottom: 8px;
+  letter-spacing: 0.03em;
+}
+
+.countdown-number {
+  font-family: 'Jua', 'Noto Sans KR', sans-serif;
+  font-size: 7.5rem;
+  line-height: 1;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FF5A83 0%, #FFA07A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 12px 0 16px;
+  filter: drop-shadow(0 6px 16px rgba(255, 112, 143, 0.3));
+  display: inline-block;
+  min-width: 140px;
+  text-align: center;
+}
+
+.countdown-number.pop {
+  animation: numberPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes numberPop {
+  0% {
+    transform: scale(0.35);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.22);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.countdown-cheer {
+  font-family: 'Jua', 'Noto Sans KR', sans-serif;
+  font-size: 1.2rem;
+  color: #4A5568;
+  letter-spacing: 0.02em;
+}
+
+.countdown-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ==========================================================================
    인쇄 전용 배너 (화면에서는 숨김, 인쇄 시에만 보임)
    ========================================================================== */
 .print-only-header {
@@ -965,6 +1063,7 @@ body {
   .management-panel,
   .toast-notice,
   .modal-overlay,
+  .countdown-overlay,
   .app-footer,
   .btn-swap-student {
     display: none !important;
